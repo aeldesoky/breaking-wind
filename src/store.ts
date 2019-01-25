@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import wind from '@/resources/wind'
+import depth from '@/resources/depth'
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';
 
 export interface Turbine {
@@ -21,8 +23,8 @@ const store = new Vuex.Store<StoreType>({});
 
 @Module({ dynamic: true, store, name: 'data' })
 class DataModule extends VuexModule {
-    public depth: number[][] = [];
-    public wind: number[][] = [];
+    public depth: number[][] = depth;
+    public wind: number[][] = wind;
 
     public general = {
       budget: 200000,
