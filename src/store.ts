@@ -89,40 +89,32 @@ export const optionalInformation = [
 
 export const turbineInformation = [
   {
-    title: 'name',
-    description: 'name',
+    title: 'Nominal Power At',
+    description: 'The windspeed at which the turbine can produce the nominal power.',
   },
   {
-    title: 'nominalPowerAt',
-    description: 'nominalPowerAt',
+    title: 'Cut Out Wind Speed',
+    description: 'The wind speed at which the turbine will stop working to avoid damage.',
   },
   {
-    title: 'cutOutWindSpeed',
-    description: 'cutOutWindSpeed',
+    title: 'Nominal Power',
+    description: 'The nominal steady power produced by the turbine.',
   },
   {
-    title: 'nominalPower',
-    description: 'nominalPower',
+    title: 'Unit Cost',
+    description: 'The unit installation cost for the turbine.',
   },
   {
-    title: 'costPerMeterDepth',
-    description: 'costPerMeterDepth',
+    title: 'Maintenance',
+    description: 'The yearly maintenance cost for the turbine.',
   },
   {
-    title: 'unitCost',
-    description: 'unitCost',
+    title: 'Time to Construct',
+    description: 'The expected time to finish constructing the turbine.',
   },
   {
-    title: 'maintenance',
-    description: 'maintenance',
-  },
-  {
-    title: 'timeToConstruct',
-    description: 'timeToConstruct',
-  },
-  {
-    title: 'disabled',
-    description: 'disabled',
+    title: 'Disabled',
+    description: 'If checked, the turbined will not be used in the analysis.',
   },
 ];
 
