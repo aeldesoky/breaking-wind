@@ -12,7 +12,8 @@ Used to provide results of the analysis.
       <v-select
           :items="options"
           label="Analyses"
-          v-model="selectedAnalyses"
+          :value="selectedAnalyses"
+          @input="selectAnalyses"
       ></v-select>
     </div>
 
@@ -140,6 +141,10 @@ export default class Results extends Vue {
         longitude: latlon.latitude[indices[2]],
       };
     });
+  }
+
+  public selectAnalyses(analyses: Analyses) {
+      data.selectAnalyses(analyses);
   }
 }
 </script>

@@ -10,6 +10,27 @@ Also defines customizations that are not possible through the default component.
 
     export default {
         extends: VueGoogleHeatmap,
+		methods: {
+            render() {
+                return loaded.then(() => {
+                    const mapElement = this.$refs.map;
+                    this.$mapObject = new google.maps.Map(mapElement, {
+                        zoom: 10,
+                        center: { lat: this.lat, lng: this.lng },
+                        mapTypeId: 'hybrid',
+                        streetViewControl: false,
+                        mapTypeControl: false
+                    });
+                    this.$heatmap = new google.maps.visualization.HeatmapLayer({
+                        data: this.heatmapPoints,
+                        map: this.$mapObject,
+                        radius: 50
+                    });
+
+                    this.$heatmap.setMap(this.$mapObject);
+                });
+            }
+		},
         computed: {
             mapWidth() {
                 if (typeof this.width === 'string') {
@@ -36,24 +57,11 @@ Also defines customizations that are not possible through the default component.
                 );
             }
         },
+		watch: {
+            points: 'render'
+		},
         created() {
-            return loaded.then(() => {
-                const mapElement = this.$refs.map;
-                this.$mapObject = new google.maps.Map(mapElement, {
-                    zoom: 10,
-                    center: { lat: this.lat, lng: this.lng },
-                    mapTypeId: 'hybrid',
-                    streetViewControl: false,
-                    mapTypeControl: false
-                });
-                this.$heatmap = new google.maps.visualization.HeatmapLayer({
-                    data: this.heatmapPoints,
-                    map: this.$mapObject,
-                    radius: 50,
-                    dissipating: true
-                });
-                this.$heatmap.setMap(this.$mapObject);
-            });
+            this.render();
         }
     };
 </script>

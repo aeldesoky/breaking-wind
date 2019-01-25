@@ -78,12 +78,13 @@ analysis.
         label="Helicopter Trips (Times / Year)"
         thumb-label
       ></v-slider>
-      
+
       <v-slider
-        :value="optional.MaintenanceVesselsCost"
-        @input="setOptionalCost('MaintenanceVesselsCost', $event)"
-        max="100000000"
-        label="Cost (Once)"
+        :value="optional.MaintenanceVesselsCost / 1000000"
+        @input="setOptionalCost('MaintenanceVesselsCost', $event * 1000000)"
+        max="100"
+        label="Cost (Million $)"
+        thumb-size="35"
         thumb-label
       ></v-slider>
 
@@ -100,6 +101,7 @@ analysis.
         @input="setOptionalCost('DiagnosticTeamCost', $event)"
         max="50000"
         label="Diagnostic Team Cost ($ / year)"
+        thumb-size="35"
         thumb-label
       ></v-slider>
 
@@ -108,6 +110,7 @@ analysis.
         @input="setOptionalCost('OffshoreLogisticCost', $event)"
         max="50000"
         label="Offshore Logistics Cost"
+        thumb-size="35"
         thumb-label
       ></v-slider>
 
@@ -116,6 +119,7 @@ analysis.
         @input="setOptionalCost('upgradeTeamCost', $event)"
         max="50000"
         label="Upgrade Team Cost"
+        thumb-size="35"
         thumb-label
       ></v-slider>
 
