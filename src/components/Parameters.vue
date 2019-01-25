@@ -58,6 +58,75 @@ analysis.
 
     <v-divider></v-divider>
 
+    <div class = "turbine-title">
+      <span class="headline mb-0">Optional Costs</span>
+    </div>
+
+    <v-form v-model="valid">
+      <v-slider
+        :value="optional.HeliCost"
+        @input="setOptionalCost('HeliCost', $event)"
+        max="20000"
+        label="Helicopter Cost ($ / Week)"
+        thumb-label
+      ></v-slider>
+
+      <v-slider
+        :value="optional.HeliWeeksPerYear"
+        @input="setOptionalCost('HeliWeeksPerYear', $event)"
+        max="6"
+        label="Helicopter Trips (Times / Year)"
+        thumb-label
+      ></v-slider>
+      
+      <v-slider
+        :value="optional.MaintenanceVesselsCost"
+        @input="setOptionalCost('MaintenanceVesselsCost', $event)"
+        max="100000000"
+        label="Cost (Once)"
+        thumb-label
+      ></v-slider>
+
+      <v-slider
+        :value="optional.MaintenanceVesselsNum"
+        @input="setOptionalCost('MaintenanceVesselsNum', $event)"
+        max="2"
+        ticks
+        label="Number of Maintenance Vessels"
+        thumb-label
+      ></v-slider>
+
+      <v-slider
+        :value="optional.DiagnosticTeamCost"
+        @input="setOptionalCost('DiagnosticTeamCost', $event)"
+        max="50000"
+        ticks
+        label="Diagnostic Team Cost ($ / year)"
+        thumb-label
+      ></v-slider>
+
+      <v-slider
+        :value="optional.OffshoreLogisticCost"
+        @input="setOptionalCost('OffshoreLogisticCost', $event)"
+        max="50000"
+        ticks
+        label="Offshore Logistics Cost"
+        thumb-label
+      ></v-slider>
+
+      <v-slider
+        :value="optional.upgradeTeamCost"
+        @input="setOptionalCost('upgradeTeamCost', $event)"
+        max="50000"
+        ticks
+        label="Upgrade Team Cost"
+        thumb-label
+      ></v-slider>
+
+    </v-form>
+
+    <v-divider></v-divider>
+
     <div style="display: flex">
       <h3 class="headline mb-0 turbine-title">
         Turbine
@@ -166,6 +235,7 @@ import Finances from '@/finance';
 export default class Parameters extends Vue {
   public general = data.general;
   public data = data;
+  public optional = data.optionalCosts;
   public valid = false;
   public isModalVisible = false;
   public finaces = new Finances();
@@ -192,7 +262,7 @@ export default class Parameters extends Vue {
       return;
     }
 
-    console.log(key, value);
+    // console.log(key, value);
 
     data.setTurbineOptions({
       turbine: this.turbine,
@@ -205,7 +275,14 @@ export default class Parameters extends Vue {
     data.setOption({
       key,
       value,
-    })
+    });
+  }
+
+  public setOptionalCost(key: string, value: any) {
+    data.setOptionalCost({
+      key,
+      value,
+    });
   }
 
   public showModal() {

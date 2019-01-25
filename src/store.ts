@@ -57,13 +57,13 @@ class DataModule extends VuexModule {
     };
 
     public optionalCosts = {
-      HeliCost: 1000,
-      HeliWeeksPerYear: 2,
-      MaintenanceVesselsCost: 1000,
-      MaintenanceVesselsNum: 1,
-      DiagnosticTeamCost: 420,
-      OffshoreLogisticCost: 69,
-      upgradeTeamCost: 8,
+      HeliCost: 0,
+      HeliWeeksPerYear: 0,
+      MaintenanceVesselsCost: 0,
+      MaintenanceVesselsNum: 0,
+      DiagnosticTeamCost: 0,
+      OffshoreLogisticCost: 0,
+      upgradeTeamCost: 0,
     };
 
     public analyses: Analyses[] = [];
@@ -140,6 +140,17 @@ class DataModule extends VuexModule {
 
     // @ts-ignore
     this.general[payload.key] = payload.value;
+  }
+
+  @Mutation
+  public setOptionalCost(payload: { key: string, value: any }) {
+    if (!(payload.key in this.optionalCosts)) {
+      throw Error(`Unknown key: #${payload.key}`);
+
+    }
+
+    // @ts-ignore
+    this.optionalCosts[payload.key] = payload.value;
   }
 
   @Mutation
