@@ -16,18 +16,20 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <parameters></parameters>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import Parameters from '@/components/Parameters.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    Parameters,
   },
   data () {
     return {
