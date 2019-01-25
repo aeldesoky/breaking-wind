@@ -1,5 +1,5 @@
 
-import { data } from '@/store';
+import { data, Turbine } from '@/store';
 
 class Option {
     public longitude: number = 0;
@@ -35,9 +35,9 @@ export default class Finance {
 
     }
 
-    public calculateOptionalCosts() {
+    private calculateOptionalCosts(turbine: Turbine) {
         if (data.optionalCosts.HeliCost != 0) {
-
+            
         }
 
         if (data.optionalCosts.MaintenanceVesselsCost != 0) {
@@ -49,7 +49,7 @@ export default class Finance {
         }
 
         if (data.optionalCosts.DiagnosticTeamCost != 0) {
-            
+
         }
     }
 }
