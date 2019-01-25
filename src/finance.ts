@@ -44,7 +44,7 @@ export default class Finances {
 
             const energyFlow = Array(turbine.timeToConstruct).fill(0);
             for (let i = 0; i < timespan; i++) {
-                energyFlow.push(turbine.nominalPower * (1 - outputDRate / 100) ^ i);
+                energyFlow.push(turbine.nominalPower * (1 - outputDRate / 100) ** i);
             }
 
             const presentEnergy = finance.NPV(discountRate, 0, ...energyFlow);
