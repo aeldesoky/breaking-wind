@@ -1,6 +1,7 @@
 
+import { data } from '@/store';
 
-class Option{
+class Option {
     public longitude: number = 0;
     public latitude: number =  0;
     public numberTurbines: number = 0;
@@ -26,6 +27,10 @@ export default class Finance {
         this.marr = marr;
         this.discountRate = discountRate;
         this.outputDRate = outputDRate;
+    }
+
+    public evaluate() {
+
     }
 }
 
