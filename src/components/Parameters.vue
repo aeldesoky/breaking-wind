@@ -1,8 +1,14 @@
 <template>
   <v-card class="parameters">
     <div>
-      <h3 class="headline mb-0">General Options</h3>
-      <!-- <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div> -->
+      <span class="headline mb-0">General Options</span>
+      <button
+          type="button"
+          class="btn"
+          @click="showModal"
+      >
+        <v-icon right>help</v-icon>
+      </button>
     </div>
 
     <v-form v-model="valid">
@@ -119,19 +125,30 @@
       <v-spacer></v-spacer>
       <v-btn flat color="primary">Analyze</v-btn>
     </v-card-actions>
+
+    <help-modal
+        v-show="isModalVisible"
+        @close="closeModal"
+    />
   </v-card>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { data } from '@/store';
+import HelpModal from './HelpModal.vue'
 
-@Component
+@Component({
+    components: {
+        HelpModal
+    }
+})
 export default class Parameters extends Vue {
   public general = data.general;
   public valid = false;
   public setOption = data.setOption;
   public selectedTurbine: string = '';
+  public isModalVisible = false;
 
   get turbine() {
     return data.turbineLookup[this.selectedTurbine];
@@ -153,6 +170,14 @@ export default class Parameters extends Vue {
       key: key,
       value: value,
     })
+  }
+
+  public showModal() {
+      this.isModalVisible = true;
+  }
+
+  public closeModal() {
+      this.isModalVisible = false;
   }
 }
 </script>

@@ -3,10 +3,9 @@ import './plugins/vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import VueGoogleHeatmap from 'vue-google-heatmap';
 
 Vue.config.productionTip = false;
-
-import VueGoogleHeatmap from 'vue-google-heatmap';
 
 Vue.use(VueGoogleHeatmap, {
     apiKey: "AIzaSyD4rFcC2J-WL0qNPp7VVHhYWE_LzIfXjHY"

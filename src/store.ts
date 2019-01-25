@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import wind from '@/resources/wind'
-import depth from '@/resources/depth'
+import wind from '@/resources/wind';
+import depth from '@/resources/depth';
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';
 
 export interface Turbine {
@@ -16,6 +16,25 @@ export interface Turbine {
   costPerMeterDepth: number;
 }
 
+export interface Result {
+  turbine: Turbine;
+  lcoes: number[][];
+}
+
+export interface Options {
+  budget: 200000;
+  outputDecreasePerYear: 1;
+  discountRate: 10;
+  lifeSpan: 25;
+}
+
+export interface Analyses {
+  date: Date;
+  name: string;
+  options: Options;
+  results: Result[];
+}
+
 Vue.use(Vuex);
 interface StoreType {
     data: DataModule;
@@ -28,7 +47,7 @@ class DataModule extends VuexModule {
     public depth: number[][] = depth;
     public wind: number[][] = wind;
 
-    public general = {
+    public general: Options = {
       budget: 200000,
       outputDecreasePerYear: 1, // %
       discountRate: 10, // %
