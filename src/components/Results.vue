@@ -1,7 +1,26 @@
 <template>
   <v-card class="results">
-    <div>
+    </div>
+    <div style="display: flex">
       <h3 class="headline mb-0">Analysis Results</h3>
+      <v-spacer></v-spacer>
+      <v-select
+          :items="options"
+          label="Analyses"
+          v-model="selectedAnalyses"
+      ></v-select>
+    </div>
+
+    <div
+        class="items"
+    >
+      <div
+          v-for="(item, i) in results"
+          :key="i"
+      >
+        <div>{{ item.turbine.name }}</div>
+        <div>{{ item.lceo }}</div>
+      </div>
     </div>
     <div class="analysis-value-container">
       <v-card class="results-card">
@@ -91,27 +110,6 @@
         </v-card-title>
       </v-card>
     </div>
-	  <div style="display: flex">
-		  <h3 class="headline mb-0">Results</h3>
-		  <v-spacer></v-spacer>
-		  <v-select
-			  :items="options"
-			  label="Analyses"
-			  v-model="selectedAnalyses"
-		  ></v-select>
-	  </div>
-
-	  <div
-		  class="items"
-	  >
-		  <div
-			  v-for="(item, i) in results"
-			  :key="i"
-		  >
-			  <div>{{ item.turbine.name }}</div>
-			  <div>{{ item.lceo }}</div>
-		  </div>
-	  </div>
   </v-card>
 </template>
 
@@ -203,7 +201,7 @@ export default class Results extends Vue {
 
 <style lang="sass" scoped>
 .results
-  margin: 0 15px 15px 5px
+  margin: 0 15px 0 5px
   padding: 15px
 
 .results-card

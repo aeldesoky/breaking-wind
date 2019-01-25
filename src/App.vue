@@ -50,7 +50,7 @@ export default {
 
 <style lang="sass" scoped>
 .spacer
-  margin: 30px
+  margin: 15px
 
 .row
   display: flex
