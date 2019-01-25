@@ -1,22 +1,21 @@
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+.DS_Store
+node_modules
+/dist
 
-# CMake
-cmake-build-*/
+# local env files
+.env.local
+.env.*.local
 
-# File-based project format
-*.iws
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# IntelliJ
-out/
-
-# JIRA plugin
-atlassian-ide-plugin.xml
-
-# Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
-
+# Editor directories and files
 .idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
