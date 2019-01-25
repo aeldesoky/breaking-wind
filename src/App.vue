@@ -56,5 +56,6 @@ export default {
   display: flex
 
 .parameters, .results
-  flex: 1
+  flex-grow: 1
+  flex-basis: 0
 </style>

@@ -22,12 +22,30 @@ Used to provide results of the analysis.
         v-for="(item, i) in results"
         :key="i"
       >
-        <span class="card-item">Turbine Type: {{ item.turbine.name }}</span>
-        <span class="card-item">Projected Cost ($ NPV): {{ item.cost }}</span>
-        <span class="card-item">Energy Output (kWh NPV): {{ item.energy }}</span>
-        <span class="card-item">LCEO Value: {{ item.lceo }}</span>
-        <span class="card-item">Latitude: {{ item.latitude }}</span>
-        <span class="card-item">Longitude: {{ item.longitude }}</span>
+        <div class="card-row">
+          <span class="card-item">Turbine Type: </span>
+          <span> {{ item.turbine.name }}</span>
+        </div>        
+        <div class="card-row">
+          <span class="card-item">Projected Cost (NPV): </span>
+          <span>${{ item.cost }}</span>
+        </div>        
+        <div class="card-row">
+          <span class="card-item">Energy Output (NPV): </span>
+          <span> {{ item.energy }} kWh</span>
+        </div>        
+        <div class="card-row">
+          <span class="card-item">LCEO Value: </span>
+          <span> {{ item.lceo }} $/kWh</span>
+        </div>        
+        <div class="card-row">
+          <span class="card-item">Latitude: </span>
+          <span> {{ item.latitude }}</span>
+        </div>        
+        <div class="card-row">
+          <span class="card-item">Longitude: </span>
+          <span> {{ item.longitude }}</span>
+        </div>      
       </v-card>
     </div>
   </v-card>
@@ -46,7 +64,7 @@ export default class Results extends Vue {
     month: 'long',
     day: 'numeric',
     hour: 'numeric',
-    minute: 'numeric'
+    minute: 'numeric',
   };
 
   get options(): Array<{ text: string, value: Analyses }> {
@@ -80,30 +98,31 @@ export default class Results extends Vue {
     }
 
     // Best -> worst
-    const best: Array<null | Best> = Array(this.numberOfResults).fill(null);
+    const best: Best[] = [];
 
     this.selectedAnalyses.results.forEach((result, resultIndex) => {
       const turbine = result.turbine;
       result.lcoes.forEach((row, rowIndex) => {
         row.forEach((lceo, colIndex) => {
-          const insert = (insertIndex: number) => {
-            best[insertIndex + 1] = {
+          const push = () => {
+            best.push({
               indices: [resultIndex, rowIndex, colIndex],
               lceo,
-            };
+            });
+
+            best.sort(function(a, b) {
+              return a.lceo - b.lceo;
+            });
+
+            if (best.length > this.numberOfResults) {
+              best.splice(this.numberOfResults, best.length - this.numberOfResults + 1);
+            }
+            
           };
 
-          for (const [i, item] of best.slice(0).reverse().entries()) {
-            if (item !== null && item.lceo <= lceo) {
-              // Make sure it isn't the last element in the array
-              if (i < this.numberOfResults - 1) {
-                insert(i + 1);
-              }
-            }
-
-            if (i === 0) {
-              insert(0);
-            }
+          const doInsert = best.length < this.numberOfResults || best.some((item) => lceo < item.lceo)
+          if (doInsert) {
+            push();
           }
         });
       });
@@ -115,7 +134,7 @@ export default class Results extends Vue {
       return {
         lceo,
         turbine: result.turbine,
-        cost: result.cost[indices[1], indices[2]],
+        cost: result.cost[indices[1]][indices[2]],
         energy: result.energy,
         latitude: latlon.latitude[indices[1]],
         longitude: latlon.latitude[indices[2]],
@@ -132,9 +151,11 @@ export default class Results extends Vue {
 
 .results-card
   margin: 15px
+  padding: 15px
   width: 100%
 
 .analysis-value-container
+  flex-direction: column
   display: inline-flex
   width: 100%
 
@@ -144,5 +165,12 @@ export default class Results extends Vue {
   font-weight: bold
 
 .card-item
-  display: block
+  font-weight: 500
+
+.card-row
+  display: flex
+  margin: 2px
+
+span
+  white-space: pre
 </style>
