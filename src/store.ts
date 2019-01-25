@@ -58,32 +58,32 @@ export const optionInformation = [
 
 export const optionalInformation = [
   {
-    title: 'HeliCost',
-    description: 'HeliCost',
+    title: 'Helicopter Cost',
+    description: 'Cost of helicopter maintenance.',
   },
   {
-    title: 'HeliWeeksPerYear',
-    description: 'HeliWeeksPerYear',
+    title: 'Helicopter Trips',
+    description: 'Weeks of helicopter maintenance per year. 0.5% decrease in maintenance cost per year per week in use (up to 6 weeks).',
   },
   {
-    title: 'MaintenanceVesselsCost',
-    description: 'MaintenanceVesselsCost',
+    title: 'Maintenance Vessel Cost',
+    description: 'Cost of a perminant maintenance vessel.',
   },
   {
-    title: 'MaintenanceVesselsNum',
-    description: 'MaintenanceVesselsNum',
+    title: 'Number of Maintenance Vessels',
+    description: 'Amount of maintenance vessels. 6% decrease in maintenance cost for the first vessel, 3% additional if two are in use per year (maximum 2).',
   },
   {
-    title: 'DiagnosticTeamCost',
-    description: 'DiagnosticTeamCost',
+    title: 'Diagnostic Team Cost',
+    description: 'Cost of a diagnostic team. 1% decrease in maintenance cost, 1% increase in power output',
   },
   {
-    title: 'OffshoreLogisticCost',
-    description: 'OffshoreLogisticCost',
+    title: 'Offshore Logistics Cost',
+    description: 'Cost of offshore logistics. %.5 percent increase in power output per year in use',
   },
   {
-    title: 'upgradeTeamCost',
-    description: 'upgradeTeamCost',
+    title: 'Upgrade Team Cost',
+    description: 'Cost of an upgrade team. Fixed 5% increase in power output (available after 5 years from construction) per year in use',
   },
 ];
 
