@@ -123,7 +123,7 @@
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn flat color="primary">Analyze</v-btn>
+      <v-btn @click="analyze" color="primary">Analyze</v-btn>
     </v-card-actions>
 
     <help-modal
@@ -136,12 +136,13 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { data } from '@/store';
-import HelpModal from './HelpModal.vue'
+import HelpModal from './HelpModal.vue';
+import Finances from '@/finance';
 
 @Component({
     components: {
-        HelpModal
-    }
+        HelpModal,
+    },
 })
 export default class Parameters extends Vue {
   public general = data.general;
@@ -149,13 +150,14 @@ export default class Parameters extends Vue {
   public setOption = data.setOption;
   public selectedTurbine: string = '';
   public isModalVisible = false;
+  public finaces = new Finances();
 
   get turbine() {
     return data.turbineLookup[this.selectedTurbine];
   }
 
   get turbineNames() {
-    return data.turbines.map(turbine => turbine.name);
+    return data.turbines.map((turbine) => turbine.name);
   }
 
   public mounted() {
@@ -167,9 +169,9 @@ export default class Parameters extends Vue {
   public changeTurbine(key: string, value: number) {
     data.setTurbineOptions({
       turbine: this.turbine,
-      key: key,
-      value: value,
-    })
+      key,
+      value,
+    });
   }
 
   public showModal() {
@@ -178,6 +180,10 @@ export default class Parameters extends Vue {
 
   public closeModal() {
       this.isModalVisible = false;
+  }
+
+  public analyze() {
+    this.finaces.evaluate();
   }
 }
 </script>
