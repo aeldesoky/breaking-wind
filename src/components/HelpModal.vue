@@ -14,14 +14,14 @@ Used to provide more information to the user regarding the general options.
 			</header>
 			<section class="modal-body">
 				<slot name="body">
-          <div
-            v-for="(parameter, i) in parameters"
-            :key="parameter.title"
-          >
-            <h4>{{ parameter.title }}</h4>
-            <span>{{ parameter.description }}</span>
-            <v-divider v-if="i !== parameters.length - 1"></v-divider>
-          </div>
+					<div
+					v-for="(parameter, i) in parameters"
+					:key="parameter.title"
+					>
+						<h4>{{ parameter.title }}</h4>
+						<span>{{ parameter.description }}</span>
+						<v-divider v-if="i !== parameters.length - 1"></v-divider>
+					</div>
 				</slot>
 			</section>
 			<footer class="modal-footer">
@@ -36,7 +36,6 @@ Used to provide more information to the user regarding the general options.
 			</footer>
 		</div>
 	</div>
-
 </template>
 
 <script lang="ts">
@@ -69,6 +68,7 @@ export default class HelpModal extends Vue {
 		justify-content: center;
 		align-items: center;
 		z-index: 10;
+		color: black;
 	}
 
 	.modal {
