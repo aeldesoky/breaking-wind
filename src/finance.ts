@@ -48,20 +48,36 @@ export default class Finance {
     }
 
     private calculateOptionalCosts(turbine: Turbine) {
+        let yearlyHelicopterCost = 0;
+        let MaintenanceVesselsCost = 0;
+
         if (data.optionalCosts.HeliCost != 0) {
-            
+            yearlyHelicopterCost = data.optionalCosts.HeliWeeksPerYear * data.optionalCosts.HeliCost;
+            turbine.maintenance = turbine.maintenance * (1 - (data.optionalCosts.HeliWeeksPerYear * 0.05));
         }
 
         if (data.optionalCosts.MaintenanceVesselsCost != 0) {
+            MaintenanceVesselsCost = data.optionalCosts.MaintenanceVesselsNum * data.optionalCosts.MaintenanceVesselsCost;
 
+            if (data.optionalCosts.MaintenanceVesselsNum == 1) {
+                turbine.maintenance = turbine.maintenance * (1 - 0.06);
+            }
+
+            if (data.optionalCosts.MaintenanceVesselsNum == 2) {
+                turbine.maintenance = turbine.maintenance * (1 - 0.09)
+            }
         }
 
-        if (data.optionalCosts.OffshoreLogisticCost != 0) {
-
-        }
-
-        if (data.optionalCosts.DiagnosticTeamCost != 0) {
-
+        for (let i = 0; i < this.cashFlow.length; i++) {
+            if (i == 0) {
+                this.cashFlow[i] += MaintenanceVesselsCost;
+            }
+            else {
+                this.cashFlow[i] = this.cashFlow[i] + 
+                                   yearlyHelicopterCost + 
+                                   data.optionalCosts.OffshoreLogisticCost +
+                                   data.optionalCosts.upgradeTeamCost;
+            }
         }
     }
 }
