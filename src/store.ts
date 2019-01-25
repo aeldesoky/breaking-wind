@@ -12,6 +12,8 @@ export interface Turbine {
   maintenance: number;
   timeToConstruct: number;
   disabled: boolean;
+  cutOutWindSpeed: number;
+  costPerMeterDepth: number;
 }
 
 Vue.use(Vuex);
@@ -54,6 +56,8 @@ class DataModule extends VuexModule {
         maintenance: 1_000_000,
         timeToConstruct: 1,
         disabled: false,
+        cutOutWindSpeed: 25,
+        costPerMeterDepth: 1505,
       },
     ];
 
