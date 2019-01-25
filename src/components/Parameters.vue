@@ -146,13 +146,6 @@ analysis.
       v-model="valid"
       v-if="turbine"
     >
-      <!-- <v-text-field
-        :disabled="turbine.disabled"
-        :value="turbine.name"
-        label="Name"
-        @input="changeTurbine('name', $event)"
-      ></v-text-field> -->
-
       <v-slider
         :disabled="turbine.disabled"
         :value="turbine.nominalPowerAt"
@@ -215,17 +208,17 @@ analysis.
     </v-card-actions>
 
     <help-modal
-        v-show="isModalVisible"
-        @close="closeModal"
-    />
+      v-show="isModalVisible"
+      @close="closeModal"
+    ></help-modal>
   </v-card>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { data, Turbine } from '@/store';
-import HelpModal from './HelpModal.vue';
-import Finances from '@/finance';
+import HelpModal from '@/components/HelpModal.vue';
+import { evaluate } from '@/finance';
 
 @Component({
   components: {
@@ -238,7 +231,6 @@ export default class Parameters extends Vue {
   public optional = data.optionalCosts;
   public valid = false;
   public isModalVisible = false;
-  public finaces = new Finances();
 
   get turbine() {
     return data.turbine;
@@ -261,8 +253,6 @@ export default class Parameters extends Vue {
     if (!this.turbine) {
       return;
     }
-
-    // console.log(key, value);
 
     data.setTurbineOptions({
       turbine: this.turbine,
@@ -294,7 +284,7 @@ export default class Parameters extends Vue {
   }
 
   public analyze() {
-    this.finaces.evaluate();
+    evaluate();
   }
 }
 </script>

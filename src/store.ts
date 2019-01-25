@@ -117,15 +117,6 @@ class DataModule extends VuexModule {
   public selectedAnalyses: null | Analyses = null;
   public turbine: Turbine | null = null;
 
-  get turbineLookup() {
-    const lookup: { [k: string]: number } = {};
-    this.turbines.forEach((turbine, i) => {
-      lookup[turbine.name] = i;
-    });
-
-    return lookup;
-  }
-
   @Mutation
   public addResult(analyses: Analyses) {
     this.analyses.push(analyses);
@@ -135,7 +126,6 @@ class DataModule extends VuexModule {
   public setOption(payload: { key: string, value: any }) {
     if (!(payload.key in this.general)) {
       throw Error(`Unknown key: #${payload.key}`);
-
     }
 
     // @ts-ignore

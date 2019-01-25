@@ -5,12 +5,13 @@ Utilizes the Google Maps API.
 -->
 
 <template>
-	<google-heatmap :points="points"
-					:height="500"
-					:initial-zoom=11
-					:lat="43.677407"
-					:lng="-66.426111">
-	</google-heatmap>
+	<google-heatmap 
+    :points="points"
+    :height="500"
+    :initial-zoom=11
+    :lat="43.677407"
+    :lng="-66.426111"
+  ></google-heatmap>
 </template>
 
 <script>
