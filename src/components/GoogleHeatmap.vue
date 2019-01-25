@@ -42,7 +42,7 @@ Also defines customizations that are not possible through the default component.
                 this.$mapObject = new google.maps.Map(mapElement, {
                     zoom: this.initialZoom,
                     center: { lat: this.lat, lng: this.lng },
-                    mapTypeId: 'satellite',
+                    mapTypeId: 'hybrid',
                     streetViewControl: false,
                     mapTypeControl: false
                 });
