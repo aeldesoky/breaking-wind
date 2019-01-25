@@ -1,5 +1,7 @@
 # Breaking Wind
 
+<img src="screenshot.png"/>
+
 ## Project setup
 ```
 npm install

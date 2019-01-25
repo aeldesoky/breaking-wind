@@ -16,29 +16,37 @@ export function evaluate() {
       return;
     }
 
+    // Compute optional costs and add unit cost to initialize our present costs
     let initialCost = calculateOptionalCosts(turbine);
     initialCost += turbine.unitCost;
 
+    // Add turbine maintenance to the cash flow
     const cashFlow = Array(turbine.timeToConstruct).fill(0);
     for (let i = 0; i < timespan; i++) {
       cashFlow.push(-turbine.maintenance);
     }
 
+    // Compute energy flow. This is constant for a given turbine given normal operation.
     const energyFlow = Array(turbine.timeToConstruct).fill(0);
     for (let i = 0; i < timespan; i++) {
       energyFlow.push(turbine.nominalPower * (1 - outputDRate / 100) ** i * 365 * 24);
     }
 
+    // Convert energy flow from annuities to present.
     const presentEnergy = finance.NPV(discountRate, 0, ...energyFlow);
 
+    // Record the present energy as part of our result
     lcoeMap.energy = presentEnergy;
 
+    // For all of the available data
     for (let i = 0; i < data.wind.length; i++) {
       lcoeMap.lcoes[i] = [];
       lcoeMap.lcoes[i] = [];
       lcoeMap.cost[i] = [];
 
       for (let j = 0; j < data.wind[0].length; j++) {
+
+        // Reject any turbine placement where the water is too deep or it falls outside nominal windspeed.
         if (data.depth[i][j] > 60 ||
           data.wind[i][j] < turbine.nominalPowerAt ||
           data.wind[i][j] >= turbine.cutOutWindSpeed) {
@@ -55,6 +63,8 @@ export function evaluate() {
           lcoeMap.lcoes[i][j] = Infinity;
           continue;
         }
+
+        // Record the cost and LCOE as part of out result
         lcoeMap.cost[i][j] = Math.abs(presentValue);
         lcoeMap.lcoes[i][j] = Math.abs(presentValue / presentEnergy);
       }

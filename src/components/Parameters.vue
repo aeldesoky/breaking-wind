@@ -10,7 +10,7 @@ analysis.
     <v-card class="card" style="margin-top: 0">
       <div>
         <span class="headline mb-0">General Parameters</span>
-        <button type="button" class="btn" @click="showModal(optionInformation)">
+        <button type="button" class="btn" @click="showModal($event, optionInformation)">
           <v-icon right>help</v-icon>
         </button>
       </div>
@@ -59,7 +59,7 @@ analysis.
         <h3 class="headline mb-0 turbine-title">
           Turbine
         </h3>
-        <button type="button" class="btn" @click="showModal(turbineInformation)">
+        <button type="button" class="btn" @click="showModal($event, turbineInformation)">
           <v-icon right>help</v-icon>
         </button>
         <v-spacer></v-spacer>
@@ -139,7 +139,7 @@ analysis.
       <v-expansion-panel-content class="optional-costs">
         <div class = "optional-title" slot="header">
           <span class="headline mb-0">Optional Parameters</span>
-          <button type="button" class="btn" @click="showModal(optionalInformation)">
+          <button type="button" class="btn" @click="showModal($event, optionalInformation)">
             <v-icon right>help</v-icon>
           </button>
         </div>
@@ -219,7 +219,7 @@ analysis.
     </v-card-actions>
 
     <help-modal
-      v-if="isModalVisible && parameters"
+      v-if="parameters"
       :parameters="parameters"
       @close="closeModal"
     ></help-modal>
@@ -241,8 +241,12 @@ export default class Parameters extends Vue {
   public general = data.general;
   public data = data;
   public optional = data.optionalCosts;
-  public isModalVisible = false;
+
+  // This is the selected paramters information in the form of
+  // Array<{ title: string, description: string }>
   public parameters: any[] | null = null;
+
+  // This is the information for the models
   public optionInformation = optionInformation;
   public optionalInformation = optionalInformation;
   public turbineInformation = turbineInformation;
@@ -290,13 +294,13 @@ export default class Parameters extends Vue {
     });
   }
 
-  public showModal(parameters: any[]) {
-    this.isModalVisible = true;
+  public showModal(e: MouseEvent, parameters: any[]) {
+    e.stopImmediatePropagation();
     this.parameters = parameters;
   }
 
   public closeModal() {
-    this.isModalVisible = false;
+    this.parameters = null;
   }
 
   public analyze() {
