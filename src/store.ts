@@ -19,6 +19,8 @@ export interface Turbine {
 export interface Result {
   turbine: Turbine;
   lcoes: number[][];
+  cost: number[][];
+  energy: number;
 }
 
 export interface Options {

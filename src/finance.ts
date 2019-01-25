@@ -29,7 +29,7 @@ export default class Finances {
         const discountRate = data.general.discountRate;
 
         const results = data.turbines.map((turbine: Turbine) => {
-            const lcoeMap: Result = { turbine: copy(turbine), lcoes: [] };
+            const lcoeMap: Result = { turbine: copy(turbine), lcoes: [], cost: [], energy: 0 };
             if (turbine.disabled) {
                 return;
             }
@@ -49,8 +49,12 @@ export default class Finances {
 
             const presentEnergy = finance.NPV(discountRate, 0, ...energyFlow);
 
+            lcoeMap.energy = presentEnergy;
+
             for (let i = 0; i < data.wind.length; i++) {
-                lcoeMap.lcoes[i] = [];
+                lcoeMap.lcoes[i] = [];                lcoeMap.lcoes[i] = [];
+                lcoeMap.cost[i] = [];
+
                 for (let j = 0; j < data.wind[0].length; j++) {
                     if (data.depth[i][j] > 60 ||
                         data.wind[i][j] < turbine.nominalPowerAt ||
@@ -67,7 +71,7 @@ export default class Finances {
                         lcoeMap.lcoes[i][j] = Infinity;
                         continue;
                     }
-
+                    lcoeMap.cost[i][j] = Math.abs(presentValue);
                     lcoeMap.lcoes[i][j] = Math.abs(presentValue / presentEnergy);
                 }
             }
