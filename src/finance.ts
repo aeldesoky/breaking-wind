@@ -29,7 +29,7 @@ export default class Finances {
         const discountRate = data.general.discountRate;
 
         const results = data.turbines.map((turbine: Turbine) => {
-            const lcoeMap: Result = { turbine: copy(turbine), lcoes: [], cost: [] };
+            const lcoeMap: Result = { turbine: copy(turbine), lcoes: [], cost: [], energy: 0 };
             if (turbine.disabled) {
                 return;
             }
