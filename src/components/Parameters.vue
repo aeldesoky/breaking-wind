@@ -302,6 +302,7 @@ export default class Parameters extends Vue {
   public analyze() {
     evaluate();
     data.setFinishedAnalyses(true);
+    data.save();
   }
 }
 </script>

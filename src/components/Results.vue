@@ -109,10 +109,11 @@ export default class Results extends Vue {
       const turbine = result.turbine;
       result.lcoes.forEach((row, rowIndex) => {
         row.forEach((lceo, colIndex) => {
+          lceo = lceo || Infinity;
           const push = () => {
             best.push({
               indices: [resultIndex, rowIndex, colIndex],
-              lceo,
+              lceo: lceo || Infinity,
             });
 
             best.sort(function(a, b) {

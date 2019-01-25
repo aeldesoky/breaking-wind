@@ -15,51 +15,52 @@ Utilizes the Google Maps API.
 </template>
 
 <script>
-    import GoogleHeatmap from './GoogleHeatmap.vue';
-    import Coordinates from '@/resources/latlon';
-    import { data } from '@/store';
+import GoogleHeatmap from './GoogleHeatmap.vue';
+import Coordinates from '@/resources/latlon';
+import { data } from '@/store';
 
-    export default {
-        components: {
-            GoogleHeatmap
-        },
-        computed: {
-            points() {
-                let analysis = data.selectedAnalyses;
-                let turbine = data.turbine;
+export default {
+  components: {
+    GoogleHeatmap
+  },
+  computed: {
+    points() {
+      let analysis = data.selectedAnalyses;
+      let turbine = data.turbine;
 
-                if(!analysis || !analysis.results) {
-                    return [];
-				}
+      if(!analysis || !analysis.results) {
+        return [];
+      }
 
-                if(analysis.results.length === 0) {
-                    return [];
-                }
+      if(analysis.results.length === 0) {
+        return [];
+      }
 
-				let turbineIndex = data.turbines.indexOf(data.turbine);
-                let values = analysis.results[turbineIndex].lcoes;
-                if(values.length === 0) {
-                    return [];
-				}
-
-                let points = [];
-                for(let latIndex = 0; latIndex < Coordinates.latitude.length; latIndex++) {
-                    const latitude = Coordinates.latitude[latIndex];
-
-                    for(let lngIndex = 0; lngIndex < Coordinates.longitude.length; lngIndex++) {
-                        const longitude = Coordinates.longitude[lngIndex];
-                        const value = values[latIndex][lngIndex];
-
-                        if(1 / value) {
-                            points.push({lat: latitude, lng: longitude, weight: 1 / value});
-                        }
-                    }
-                }
-
-                return points;
-			}
+      let turbineIndex = data.turbines.indexOf(data.turbine);
+        let values = analysis.results[turbineIndex].lcoes;
+        if(values.length === 0) {
+          return [];
         }
+
+        let points = [];
+        for(let latIndex = 0; latIndex < Coordinates.latitude.length; latIndex++) {
+          const latitude = Coordinates.latitude[latIndex];
+
+          for(let lngIndex = 0; lngIndex < Coordinates.longitude.length; lngIndex++) {
+            const longitude = Coordinates.longitude[lngIndex];
+            // If the value is null, make sure it is Infinity
+            const value = values[latIndex][lngIndex] || Infinity;
+
+            if(1 / value) {
+              points.push({lat: latitude, lng: longitude, weight: 1 / value});
+            }
+          }
+        }
+
+        return points;
+  }
     }
+}
 </script>
 
 <style scoped lang="scss">

@@ -66,10 +66,6 @@ export default class App extends Vue {
   public mounted() {
     data.load();
   }
-
-  public destroyed() {
-    data.save();
-  }
 }
 </script>
 

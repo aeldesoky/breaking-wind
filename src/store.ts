@@ -18,7 +18,7 @@ export interface Turbine {
 
 export interface Result {
   turbine: Turbine;
-  lcoes: number[][];
+  lcoes: Array<Array<number | null>>;
   cost: number[][];
   energy: number; // Energy (kWh) per year
 }
@@ -266,8 +266,12 @@ class DataModule extends VuexModule {
       return;
     }
 
-    console.log(saved);
     this.analyses = JSON.parse(saved);
+    this.analyses.forEach((analyses) => {
+      // Date are serialized as strings :(
+      const date = analyses.date as any as string;
+      analyses.date = new Date(date);
+    });
   }
 }
 

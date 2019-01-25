@@ -9,7 +9,7 @@ Used to provide more information to the user regarding the general options.
 		<div class="modal">
 			<header class="modal-header">
 				<slot name="header">
-					General Options Help
+					Parameter Information
 				</slot>
 			</header>
 			<section class="modal-body">
