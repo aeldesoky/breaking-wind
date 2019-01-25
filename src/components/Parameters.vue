@@ -91,7 +91,6 @@ analysis.
         :value="optional.MaintenanceVesselsNum"
         @input="setOptionalCost('MaintenanceVesselsNum', $event)"
         max="2"
-        ticks
         label="Number of Maintenance Vessels"
         thumb-label
       ></v-slider>
@@ -100,7 +99,6 @@ analysis.
         :value="optional.DiagnosticTeamCost"
         @input="setOptionalCost('DiagnosticTeamCost', $event)"
         max="50000"
-        ticks
         label="Diagnostic Team Cost ($ / year)"
         thumb-label
       ></v-slider>
@@ -109,7 +107,6 @@ analysis.
         :value="optional.OffshoreLogisticCost"
         @input="setOptionalCost('OffshoreLogisticCost', $event)"
         max="50000"
-        ticks
         label="Offshore Logistics Cost"
         thumb-label
       ></v-slider>
@@ -118,7 +115,6 @@ analysis.
         :value="optional.upgradeTeamCost"
         @input="setOptionalCost('upgradeTeamCost', $event)"
         max="50000"
-        ticks
         label="Upgrade Team Cost"
         thumb-label
       ></v-slider>
