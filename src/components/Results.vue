@@ -26,64 +26,18 @@ Used to provide results of the analysis.
       </div>
     </div>
     <div class="analysis-value-container">
-      <v-card class="results-card">
-        <v-container fluid>
-          <v-layout>
-            <v-flex xs12 align-end flexbox>
-              <span class="headline">Turbine Type:</span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-title>
-          <div>
-            <span class="value">IEC class 1B</span>
-          </div>
-        </v-card-title>
+      <v-card 
+        class="results-card"
+        v-for="(item, i) in results"
+        :key="i"
+      >
+        <span class="headline">Turbine Type: {{ item.turbine.type }}</span>
+        <span class="headline">Projected Cost ($ NPV): {{ item.cost }}</span>
+        <span class="headline">Energy Output (kWh NPV): {{ item.energy }}</span>
+        <span class="headline">LCEO Value: {{ item.lceo }}</span>
+        <span class="headline">Latitude: {{ item.lceo }}</span>
       </v-card>
-      <v-card class="results-card">
-        <v-container fluid>
-          <v-layout>
-            <v-flex xs12 align-end flexbox>
-              <span class="headline">Projected Cost:</span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-title>
-          <div>
-            <span class="value">$68.4M</span>
-          </div>
-        </v-card-title>
-      </v-card>
-      <v-card class="results-card">
-        <v-container fluid>
-          <v-layout>
-            <v-flex xs12 align-end flexbox>
-              <span class="headline">Energy Output:</span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-title>
-          <div>
-            <span class="value">3MW</span>
-          </div>
-        </v-card-title>
-      </v-card>
-    </div>
     <div class="analysis-value-container">
-      <v-card class="results-card">
-        <v-container fluid>
-          <v-layout>
-            <v-flex xs12 align-end flexbox>
-              <span class="headline">LCOE Value:</span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-title>
-          <div>
-            <span class="value">54.62</span>
-          </div>
-        </v-card-title>
-      </v-card>
       <v-card class="results-card">
         <v-container fluid>
           <v-layout>
@@ -119,6 +73,7 @@ Used to provide results of the analysis.
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { Turbine, data, Analyses } from '@/store';
+import latlon from '@/resources/latlon';
 
 @Component
 export default class Results extends Vue {
@@ -193,9 +148,12 @@ export default class Results extends Vue {
     // Filter out the null values...
     const filtered: Best[] = best.filter((item) => item) as Best[];
     return filtered.map(({ lceo, indices }) => {
+      const result = this.selectedAnalyses!.results[indices[0]];
       return {
         lceo,
-        turbine: this.selectedAnalyses!.results[indices[0]].turbine,
+        turbine: result.turbine,
+        latitude: latlon.latitude[indices[1]],
+        longitude: latlon.latitude[indices[2]],
       };
     });
   }

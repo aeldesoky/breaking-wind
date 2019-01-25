@@ -77,9 +77,9 @@ export default class Finances {
 
         const filtered = results.filter((result) => result) as Result[];
         data.addResult({
-            date: new Date(),
-            options: copy(data.general),
-            results: filtered,
+          date: new Date(),
+          options: copy(data.general),
+          results: filtered,
         });
     }
 
