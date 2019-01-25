@@ -9,7 +9,7 @@ analysis.
   <v-card class="parameters">
     <v-card class="card" style="margin-top: 0">
       <div>
-        <span class="headline mb-0">General Options</span>
+        <span class="headline mb-0">General Parameters</span>
         <button
             type="button"
             class="btn"
@@ -141,7 +141,7 @@ analysis.
     >
       <v-expansion-panel-content class="optional-costs">
         <div class = "optional-title" slot="header">
-          <span class="headline mb-0">Optional Costs</span>
+          <span class="headline mb-0">Optional Parameters</span>
         </div>
         <v-card>
           <v-form v-model="valid">
