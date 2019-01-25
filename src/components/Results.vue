@@ -13,7 +13,7 @@ Used to provide results of the analysis.
           :items="options"
           label="Analyses"
           :value="selectedAnalyses"
-          @input="selectAnalyses"
+          @input="data.selectAnalyses"
       ></v-select>
     </div>
 
@@ -59,7 +59,7 @@ import latlon from '@/resources/latlon';
 
 @Component
 export default class Results extends Vue {
-  public selectedAnalyses: Analyses | null = null;
+  public data = data;
   public numberOfResults = 5;
   public dateOptions = {
     month: 'long',
@@ -67,6 +67,10 @@ export default class Results extends Vue {
     hour: 'numeric',
     minute: 'numeric',
   };
+
+  get selectedAnalyses() {
+    return data.selectedAnalyses;
+  }
 
   get options(): Array<{ text: string, value: Analyses }> {
     return data.analyses.map((result) => {
@@ -129,7 +133,7 @@ export default class Results extends Vue {
       });
     });
     // Filter out the null values...
-    const filtered: Best[] = best.filter((item) => item) as Best[];
+    const filtered: Best[] = best.filter((item) => item && item.lceo !== Infinity) as Best[];
     return filtered.map(({ lceo, indices }) => {
       const result = this.selectedAnalyses!.results[indices[0]];
       return {
@@ -141,10 +145,6 @@ export default class Results extends Vue {
         longitude: latlon.latitude[indices[2]],
       };
     });
-  }
-
-  public selectAnalyses(analyses: Analyses) {
-      data.selectAnalyses(analyses);
   }
 }
 </script>

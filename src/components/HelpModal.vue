@@ -14,20 +14,14 @@ Used to provide more information to the user regarding the general options.
 			</header>
 			<section class="modal-body">
 				<slot name="body">
-					<h4>Budget</h4>
-					<span>Specify the budget in CAD projected for the development project.</span>
-					<v-divider></v-divider>
-
-					<h4>Discount Rate</h4>
-					<span>Update this</span>
-					<v-divider></v-divider>
-
-					<h4>Output Decrease</h4>
-					<span>Update this</span>
-					<v-divider></v-divider>
-
-					<h4>Lifespan</h4>
-					<span>Lifespan of the turbines.</span>
+          <div
+            v-for="(parameter, i) in parameters"
+            :key="parameter.title"
+          >
+            <h4>{{ parameter.title }}</h4>
+            <span>{{ parameter.description }}</span>
+            <v-divider v-if="i !== parameters.length - 1"></v-divider>
+          </div>
 				</slot>
 			</section>
 			<footer class="modal-footer">
@@ -45,16 +39,22 @@ Used to provide more information to the user regarding the general options.
 
 </template>
 
-<script>
-    export default {
-        name: 'modal',
+<script lang="ts">
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 
-        methods: {
-            close() {
-                this.$emit('close');
-            },
-        },
-    };
+export type Parameters = Array<{ title: string, description: string }>;
+
+@Component({
+  components: {
+    HelpModal,
+  },
+})
+export default class HelpModal extends Vue {
+  @Prop({ type: Array, required: true }) parameters!: Parameters;
+  public close() {
+    this.$emit('close');
+  }
+}
 </script>
 
 <style>

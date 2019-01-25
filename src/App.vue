@@ -25,25 +25,50 @@
       </div>
       <div class="spacer"></div>
     </v-content>
+
+    <v-snackbar
+      :value="data.finishedAnalyses"
+      @input="data.setFinishedAnalyses"
+      top
+      right
+    >
+      Analyses finished. See Analyses dropdown.
+      <v-btn
+        color="primary"
+        flat
+        @click="data.finishedAnalyses(false)"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 import Parameters from '@/components/Parameters.vue';
 import Results from '@/components/Results.vue';
-import Map from "./components/Map";
+import Map from '@/components/Map.vue';
+import { mapState } from 'vuex';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { data } from '@/store';
 
-export default {
-  name: 'App',
+
+@Component({
   components: {
     Parameters,
     Map,
     Results,
-  },
-  data () {
-    return {
-      //
-    }
+  }
+})
+export default class App extends Vue {
+  public data = data;
+
+  public mounted() {
+    data.load();
+  }
+
+  public destroyed() {
+    data.save();
   }
 }
 </script>

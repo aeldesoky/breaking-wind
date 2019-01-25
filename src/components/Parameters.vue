@@ -13,7 +13,7 @@ analysis.
         <button
             type="button"
             class="btn"
-            @click="showModal"
+            @click="showModal(optionInformation)"
         >
           <v-icon right>help</v-icon>
         </button>
@@ -219,7 +219,8 @@ analysis.
     </v-card-actions>
 
     <help-modal
-      v-show="isModalVisible"
+      v-if="isModalVisible && parameters"
+      :parameters="parameters"
       @close="closeModal"
     ></help-modal>
   </v-card>
@@ -227,7 +228,7 @@ analysis.
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-import { data, Turbine } from '@/store';
+import { data, Turbine, optionInformation } from '@/store';
 import HelpModal from '@/components/HelpModal.vue';
 import { evaluate } from '@/finance';
 
@@ -242,6 +243,8 @@ export default class Parameters extends Vue {
   public optional = data.optionalCosts;
   public valid = false;
   public isModalVisible = false;
+  public parameters: any[] | null = null;
+  public optionInformation = optionInformation;
 
   get turbine() {
     return data.turbine;
@@ -286,8 +289,9 @@ export default class Parameters extends Vue {
     });
   }
 
-  public showModal() {
+  public showModal(parameters: any[]) {
     this.isModalVisible = true;
+    this.parameters = parameters;
   }
 
   public closeModal() {
@@ -296,6 +300,7 @@ export default class Parameters extends Vue {
 
   public analyze() {
     evaluate();
+    data.setFinishedAnalyses(true);
   }
 }
 </script>

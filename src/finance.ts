@@ -13,7 +13,7 @@ export function evaluate() {
   const results = data.turbines.map((turbine: Turbine) => {
     const lcoeMap: Result = { turbine: copy(turbine), lcoes: [], cost: [], energy: 0 };
     if (turbine.disabled) {
-        return;
+      return;
     }
 
     let initialCost = calculateOptionalCosts(turbine);

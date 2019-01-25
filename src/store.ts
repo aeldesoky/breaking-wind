@@ -20,7 +20,7 @@ export interface Result {
   turbine: Turbine;
   lcoes: number[][];
   cost: number[][];
-  energy: number;
+  energy: number; // Energy (kWh) per year
 }
 
 export interface Options {
@@ -36,6 +36,28 @@ export interface Analyses {
   options: Options;
   results: Result[];
 }
+
+type Strings<T> = { [key in keyof T]: { title: string, description: string } };
+type OptionInformation = Strings<Options>;
+
+export const optionInformation = [
+  {
+    title: 'Budget',
+    description: 'Specify the budget in CAD projected for the development project.',
+  },
+  {
+    title: 'Output Decrease Per Year',
+    description: 'The percentage decrease of the energy output each year. This value compounds.',
+  },
+  {
+    title: 'Discount Rate',
+    description: 'Percentage that a future value is discounted against the same value today. This value compounds.',
+  },
+  {
+    title: 'Lifespan',
+    description: 'Lifespan of the turbines in years.',
+  },
+];
 
 Vue.use(Vuex);
 interface StoreType {
@@ -116,6 +138,12 @@ class DataModule extends VuexModule {
 
   public selectedAnalyses: null | Analyses = null;
   public turbine: Turbine | null = null;
+  public finishedAnalyses = false;
+
+  @Mutation
+  public setFinishedAnalyses(value: boolean) {
+    this.finishedAnalyses = value;
+  }
 
   @Mutation
   public addResult(analyses: Analyses) {
@@ -157,6 +185,22 @@ class DataModule extends VuexModule {
   @Mutation
   public selectTurbine(turbine: Turbine) {
     this.turbine = turbine;
+  }
+
+  @Mutation
+  public save() {
+    localStorage.setItem('analyses', JSON.stringify(this.analyses));
+  }
+
+  @Mutation
+  public load() {
+    const saved = localStorage.getItem('analyses' || '[]');
+    if (!saved) {
+      return;
+    }
+
+    console.log(saved);
+    this.analyses = JSON.parse(saved);
   }
 }
 
