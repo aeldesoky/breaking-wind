@@ -1,3 +1,10 @@
+<!--
+Parameters panel.
+
+Used to provide various options to the user, allowing them to customize their
+analysis.
+-->
+
 <template>
   <v-card class="parameters">
     <div>

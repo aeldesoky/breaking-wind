@@ -1,3 +1,9 @@
+<!--
+Help modal for the Parameters panel.
+
+Used to provide more information to the user regarding the general options.
+-->
+
 <template>
 	<div class="modal-backdrop">
 		<div class="modal">
@@ -9,22 +15,19 @@
 			<section class="modal-body">
 				<slot name="body">
 					<h4>Budget</h4>
-					Specify the budget in CAD projected for the development project.
-
+					<span>Specify the budget in CAD projected for the development project.</span>
 					<v-divider></v-divider>
 
 					<h4>Discount Rate</h4>
-					Update this
-
+					<span>Update this</span>
 					<v-divider></v-divider>
 
 					<h4>Output Decrease</h4>
-					Update this
-
+					<span>Update this</span>
 					<v-divider></v-divider>
 
 					<h4>Lifespan</h4>
-					Lifespan of the turbines.
+					<span>Lifespan of the turbines.</span>
 				</slot>
 			</section>
 			<footer class="modal-footer">

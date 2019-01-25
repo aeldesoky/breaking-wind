@@ -1,5 +1,11 @@
+<!--
+Extension to the VueGoogleHeatmap component to enable weighted heatmaps using the Google Maps API.
+
+Also defines customizations that are not possible through the default component.
+-->
+
 <script>
-    import VueGoogleHeatmap from 'vue-google-heatmap/src/VueGoogleHeatmap.vue';
+	import VueGoogleHeatmap from 'vue-google-heatmap/src/VueGoogleHeatmap.vue';
     import { loaded } from 'vue-google-heatmap/src/loader';
 
     export default {

@@ -1,9 +1,15 @@
+<!--
+Component used to display a map, with points used to render a heatmap.
+
+Utilizes the Google Maps API.
+-->
+
 <template>
 	<google-heatmap :points="points"
 					:height="500"
 					:initial-zoom=11
-					:lat="43.444364"
-					:lng="-66.016417">
+					:lat="43.677407"
+					:lng="-66.426111">
 	</google-heatmap>
 </template>
 
@@ -11,29 +17,24 @@
     import GoogleHeatmap from './GoogleHeatmap.vue';
     import wind from '@/resources/wind';
     import depth from '@/resources/depth';
+    import latlon from '@/resources/latlon';
 
     export default {
         components: {
             GoogleHeatmap
         },
         data() {
-            const latMin = 42.7;
-            const lngMin = -66.6;
-            const delta = 0.012;
-
             let points = [];
-            let lat = latMin;
-            let lng = lngMin;
-            wind.forEach((longitudeValues) => {
-                lat = latMin;
+            for(let latIndex = 0; latIndex < latlon.latitude.length; latIndex++) {
+                let latitude = latlon.latitude[latIndex];
 
-                longitudeValues.forEach((value) => {
-                    points.push({lat: lat, lng: lng, weight: Math.pow(value, 2)});
-					lat += delta;
-				});
+                for(let lngIndex = 0; lngIndex < latlon.longitude.length; lngIndex++) {
+                    let longitude = latlon.longitude[lngIndex];
+                    let value = wind[latIndex][lngIndex];
 
-                lng += delta;
-			});
+                    points.push({lat: latitude, lng: longitude, weight: Math.pow(value, 2)});
+                }
+			}
 
             return {
                 points: points

@@ -1,3 +1,9 @@
+<!--
+Results panel.
+
+Used to provide results of the analysis.
+-->
+
 <template>
   <v-card class="results">
     <div style="display: flex">
@@ -10,9 +16,7 @@
       ></v-select>
     </div>
 
-    <div
-        class="items"
-    >
+    <div class="items">
       <div
           v-for="(item, i) in results"
           :key="i"
