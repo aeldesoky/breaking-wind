@@ -36,7 +36,7 @@
                 this.$mapObject = new google.maps.Map(mapElement, {
                     zoom: this.initialZoom,
                     center: { lat: this.lat, lng: this.lng },
-                    mapTypeId: this.mapType,
+                    mapTypeId: 'satellite',
                     streetViewControl: false,
                     mapTypeControl: false
                 });
