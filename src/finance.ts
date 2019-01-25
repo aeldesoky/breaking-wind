@@ -71,7 +71,8 @@ export function evaluate() {
   });
 }
 
-function calculateOptionalCosts(turbine: Turbine) {
+function calculateOptionalCosts(turbine: Turbine) {  
+  // Storing the original turbine information to be displayed
   turbine = copy(turbine);
 
   let yearlyHelicopterCost = 0;
@@ -79,23 +80,27 @@ function calculateOptionalCosts(turbine: Turbine) {
   const optionalCost = new Array(data.general.lifeSpan);
   const finance = new Finance();
 
+  // Finding the yearly helicopter cost and updating the turbine maintenance cost accordingly
   if (data.optionalCosts.HeliCost !== 0) {
       yearlyHelicopterCost = - (data.optionalCosts.HeliWeeksPerYear * data.optionalCosts.HeliCost);
       turbine.maintenance = turbine.maintenance * (1 - (data.optionalCosts.HeliWeeksPerYear * 0.05));
   }
 
+  // Finding the total maintenance vessels costs and updating the turbine maintenance cost accordingly
   if (data.optionalCosts.MaintenanceVesselsCost !== 0) {
     MaintenanceVesselsCost = - (data.optionalCosts.MaintenanceVesselsNum * data.optionalCosts.MaintenanceVesselsCost);
 
     if (data.optionalCosts.MaintenanceVesselsNum === 1) {
-      turbine.maintenance = turbine.maintenance * (1 - 0.06);
+      turbine.maintenance = turbine.maintenance * (1 - 0.06); // Decrease maintenance cost by 6% for 1 vessel
     }
 
+
     if (data.optionalCosts.MaintenanceVesselsNum === 2) {
-      turbine.maintenance = turbine.maintenance * (1 - 0.09);
+      turbine.maintenance = turbine.maintenance * (1 - 0.09); // Decrease maintenance cost by 9% for 2 vessels
     }
   }
 
+  // Creating the cash flow array for all the yearly costs
   for (let i = 0; i < optionalCost.length; i++) {
     optionalCost[i] = (
       yearlyHelicopterCost -
@@ -104,6 +109,6 @@ function calculateOptionalCosts(turbine: Turbine) {
     );
   }
 
-  return finance.NPV(data.general.discountRate, -MaintenanceVesselsCost, ...optionalCost);
+  return finance.NPV(data.general.discountRate, -MaintenanceVesselsCost, ...optionalCost); // Calculate the Present worth of the costs
 }
 
