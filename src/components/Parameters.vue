@@ -329,7 +329,6 @@ export default class Parameters extends Vue {
   margin-bottom: 15px
 
 .optional-costs
-  padding-left: 15px
   padding-right: 15px
 
 .optional-costs-card
