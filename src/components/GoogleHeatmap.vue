@@ -43,7 +43,8 @@
                 this.$heatmap = new google.maps.visualization.HeatmapLayer({
                     data: this.heatmapPoints,
                     map: this.$mapObject,
-                    radius: 20
+                    radius: 50,
+                    dissipating: true
                 });
                 this.$heatmap.setMap(this.$mapObject);
             });
