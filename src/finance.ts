@@ -26,19 +26,16 @@ interface LcoeMap {
 
 export default class Finances {
     public options: Array<Option> = [];
-    public marr: number;
     public discountRate: number; 
     public outputDRate: number;
     public timespan: number;
     public lcoeMap: Array<LcoeMap> = [];
     public cashFlow: Array<number>;
 
-    constructor(marr: number, discountRate: number, outputDRate: number){
-        this.marr = marr;
-        this.discountRate = discountRate;
-        this.outputDRate = outputDRate;
+    constructor(){
+        this.discountRate = data.general.discountRate;
+        this.outputDRate = data.general.outputDecreasePerYear;
         this.timespan = data.general.lifeSpan;
-
         this.cashFlow = new Array(data.general.lifeSpan);
     }
 
@@ -71,7 +68,7 @@ export default class Finances {
                             this.cashFlow[0] -= turbine.maintenance
                         }
 
-                        let presentValue = finance.NPV(this.marr, initialCost, ...this.cashFlow);
+                        let presentValue = finance.NPV(this.discountRate, initialCost, ...this.cashFlow);
 
                         if (data.general.budget < presentValue) {
                             lcoeMap.map[i][j] = Infinity;
@@ -82,7 +79,7 @@ export default class Finances {
                             let leftOverPercentage = 1;
                             for (let k = 0; k < this.timespan; k++) {
                                 totalPower += turbine.nominalPower * leftOverPercentage;
-                                leftOverPercentage *= (1 - data.general.outputDecreasePerYear/100)
+                                leftOverPercentage *= (1 - this.outputDRate/100)
                             }
 
                             lcoeMap.map[i][j] = presentValue/totalPower
@@ -124,7 +121,7 @@ export default class Finances {
                                data.optionalCosts.upgradeTeamCost);
         }
 
-        return finance.NPV(this.marr, -MaintenanceVesselsCost, ...optionalCost);
+        return finance.NPV(this.discountRate, -MaintenanceVesselsCost, ...optionalCost);
     }
 }
 
