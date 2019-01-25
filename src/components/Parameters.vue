@@ -57,75 +57,7 @@ analysis.
     </v-form>
 
     <v-divider></v-divider>
-
-    <div class = "turbine-title">
-      <span class="headline mb-0">Optional Costs</span>
-    </div>
-
-    <v-form v-model="valid">
-      <v-slider
-        :value="optional.HeliCost"
-        @input="setOptionalCost('HeliCost', $event)"
-        max="20000"
-        label="Helicopter Cost ($ / Week)"
-        thumb-label
-      ></v-slider>
-
-      <v-slider
-        :value="optional.HeliWeeksPerYear"
-        @input="setOptionalCost('HeliWeeksPerYear', $event)"
-        max="6"
-        label="Helicopter Trips (Times / Year)"
-        thumb-label
-      ></v-slider>
-
-      <v-slider
-        :value="optional.MaintenanceVesselsCost / 1000000"
-        @input="setOptionalCost('MaintenanceVesselsCost', $event * 1000000)"
-        max="100"
-        label="Cost (Million $)"
-        thumb-size="35"
-        thumb-label
-      ></v-slider>
-
-      <v-slider
-        :value="optional.MaintenanceVesselsNum"
-        @input="setOptionalCost('MaintenanceVesselsNum', $event)"
-        max="2"
-        label="Number of Maintenance Vessels"
-        thumb-label
-      ></v-slider>
-
-      <v-slider
-        :value="optional.DiagnosticTeamCost"
-        @input="setOptionalCost('DiagnosticTeamCost', $event)"
-        max="50000"
-        label="Diagnostic Team Cost ($ / year)"
-        thumb-size="35"
-        thumb-label
-      ></v-slider>
-
-      <v-slider
-        :value="optional.OffshoreLogisticCost"
-        @input="setOptionalCost('OffshoreLogisticCost', $event)"
-        max="50000"
-        label="Offshore Logistics Cost"
-        thumb-size="35"
-        thumb-label
-      ></v-slider>
-
-      <v-slider
-        :value="optional.upgradeTeamCost"
-        @input="setOptionalCost('upgradeTeamCost', $event)"
-        max="50000"
-        label="Upgrade Team Cost"
-        thumb-size="35"
-        thumb-label
-      ></v-slider>
-
-    </v-form>
-
-    <v-divider></v-divider>
+    
 
     <div style="display: flex">
       <h3 class="headline mb-0 turbine-title">
@@ -201,6 +133,84 @@ analysis.
         @change="changeTurbine('disabled', $event)"
       ></v-checkbox>
     </v-form>
+
+    <v-expansion-panel
+      v-model="panel"
+      expand
+    >
+      <v-expansion-panel-content class="optional-costs">
+        <div class = "optional-title" slot="header">
+          <span class="headline mb-0">Optional Costs</span>
+        </div>
+        <v-card>
+          <v-form v-model="valid">
+            <v-slider
+              :value="optional.HeliCost"
+              @input="setOptionalCost('HeliCost', $event)"
+              max="20000"
+              thumb-size="35"
+              label="Helicopter Cost ($ / Week)"
+              thumb-label
+            ></v-slider>
+
+            <v-slider
+              :value="optional.HeliWeeksPerYear"
+              @input="setOptionalCost('HeliWeeksPerYear', $event)"
+              max="6"
+              ticks
+              label="Helicopter Trips (Times / Year)"
+              thumb-label
+            ></v-slider>
+
+            <v-slider
+              :value="optional.MaintenanceVesselsCost / 1000000"
+              @input="setOptionalCost('MaintenanceVesselsCost', $event * 1000000)"
+              max="100"
+              label="Maintenance Vessel Cost (Million $)"
+              thumb-size="35"
+              thumb-label
+            ></v-slider>
+
+            <v-slider
+              :value="optional.MaintenanceVesselsNum"
+              @input="setOptionalCost('MaintenanceVesselsNum', $event)"
+              max="2"
+              ticks
+              label="Number of Maintenance Vessels"
+              thumb-label
+            ></v-slider>
+
+            <v-slider
+              :value="optional.DiagnosticTeamCost"
+              @input="setOptionalCost('DiagnosticTeamCost', $event)"
+              max="50000"
+              label="Diagnostic Team Cost ($ / year)"
+              thumb-size="35"
+              thumb-label
+            ></v-slider>
+
+            <v-slider
+              :value="optional.OffshoreLogisticCost"
+              @input="setOptionalCost('OffshoreLogisticCost', $event)"
+              max="50000"
+              label="Offshore Logistics Cost"
+              thumb-size="35"
+              thumb-label
+            ></v-slider>
+
+            <v-slider
+              :value="optional.upgradeTeamCost"
+              @input="setOptionalCost('upgradeTeamCost', $event)"
+              max="50000"
+              label="Upgrade Team Cost"
+              thumb-size="35"
+              thumb-label
+            ></v-slider>
+
+          </v-form>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
 
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -299,4 +309,13 @@ export default class Parameters extends Vue {
 
 .turbine-select
   margin-top: 11px
+
+.optional-title
+  padding-left: 0px
+  margin-top: 15px
+  margin-bottom: 15px
+
+.optional-costs
+  padding-left: 15px
+  padding-right: 15px
 </style>
