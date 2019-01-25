@@ -10,16 +10,12 @@ analysis.
     <v-card class="card" style="margin-top: 0">
       <div>
         <span class="headline mb-0">General Parameters</span>
-        <button
-            type="button"
-            class="btn"
-            @click="showModal(optionInformation)"
-        >
+        <button type="button" class="btn" @click="showModal(optionInformation)">
           <v-icon right>help</v-icon>
         </button>
       </div>
 
-      <v-form v-model="valid">
+      <v-form>
         <v-slider
           :value="general.budget / 1000000"
           @input="setOption('budget', $event * 1000000)"
@@ -63,6 +59,9 @@ analysis.
         <h3 class="headline mb-0 turbine-title">
           Turbine
         </h3>
+        <button type="button" class="btn" @click="showModal(turbineInformation)">
+          <v-icon right>help</v-icon>
+        </button>
         <v-spacer></v-spacer>
         <v-select
           class="turbine-select"
@@ -75,7 +74,6 @@ analysis.
       </div>
 
       <v-form
-        v-model="valid"
         v-if="turbine"
       >
         <v-slider
@@ -136,15 +134,17 @@ analysis.
     </v-card>
 
     <v-expansion-panel
-      v-model="panel"
       expand class="optional-costs-card"
     >
       <v-expansion-panel-content class="optional-costs">
         <div class = "optional-title" slot="header">
           <span class="headline mb-0">Optional Parameters</span>
+          <button type="button" class="btn" @click="showModal(optionalInformation)">
+            <v-icon right>help</v-icon>
+          </button>
         </div>
         <v-card>
-          <v-form v-model="valid">
+          <v-form>
             <v-slider
               :value="optional.HeliCost"
               @input="setOptionalCost('HeliCost', $event)"
@@ -228,7 +228,7 @@ analysis.
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-import { data, Turbine, optionInformation } from '@/store';
+import { data, Turbine, optionInformation, turbineInformation, optionalInformation } from '@/store';
 import HelpModal from '@/components/HelpModal.vue';
 import { evaluate } from '@/finance';
 
@@ -241,10 +241,11 @@ export default class Parameters extends Vue {
   public general = data.general;
   public data = data;
   public optional = data.optionalCosts;
-  public valid = false;
   public isModalVisible = false;
   public parameters: any[] | null = null;
   public optionInformation = optionInformation;
+  public optionalInformation = optionalInformation;
+  public turbineInformation = turbineInformation;
 
   get turbine() {
     return data.turbine;

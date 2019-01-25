@@ -37,9 +37,6 @@ export interface Analyses {
   results: Result[];
 }
 
-type Strings<T> = { [key in keyof T]: { title: string, description: string } };
-type OptionInformation = Strings<Options>;
-
 export const optionInformation = [
   {
     title: 'Budget',
@@ -56,6 +53,76 @@ export const optionInformation = [
   {
     title: 'Lifespan',
     description: 'Lifespan of the turbines in years.',
+  },
+];
+
+export const optionalInformation = [
+  {
+    title: 'HeliCost',
+    description: 'HeliCost',
+  },
+  {
+    title: 'HeliWeeksPerYear',
+    description: 'HeliWeeksPerYear',
+  },
+  {
+    title: 'MaintenanceVesselsCost',
+    description: 'MaintenanceVesselsCost',
+  },
+  {
+    title: 'MaintenanceVesselsNum',
+    description: 'MaintenanceVesselsNum',
+  },
+  {
+    title: 'DiagnosticTeamCost',
+    description: 'DiagnosticTeamCost',
+  },
+  {
+    title: 'OffshoreLogisticCost',
+    description: 'OffshoreLogisticCost',
+  },
+  {
+    title: 'upgradeTeamCost',
+    description: 'upgradeTeamCost',
+  },
+];
+
+export const turbineInformation = [
+  {
+    title: 'name',
+    description: 'name',
+  },
+  {
+    title: 'nominalPowerAt',
+    description: 'nominalPowerAt',
+  },
+  {
+    title: 'cutOutWindSpeed',
+    description: 'cutOutWindSpeed',
+  },
+  {
+    title: 'nominalPower',
+    description: 'nominalPower',
+  },
+  {
+    title: 'costPerMeterDepth',
+    description: 'costPerMeterDepth',
+  },
+  {
+    title: 'unitCost',
+    description: 'unitCost',
+  },
+  {
+    title: 'maintenance',
+    description: 'maintenance',
+  },
+  {
+    title: 'timeToConstruct',
+    description: 'timeToConstruct',
+  },
+  {
+    title: 'disabled',
+    description: 'disabled',
   },
 ];
 
