@@ -1,6 +1,6 @@
 <template>
   <v-app>
-;    <v-toolbar app>;
+    <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>Vuetify</span>
         <span class="font-weight-light">MATERIAL DESIGN</span>
@@ -16,18 +16,18 @@
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <Map/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import Map from "./components/Map";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+      Map
   },
   data () {
     return {
