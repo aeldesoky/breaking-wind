@@ -39,12 +39,12 @@ export default class Finances {
 
             const cashFlow = Array(turbine.timeToConstruct).fill(0);
             for (let i = 0; i < timespan; i++) {
-                cashFlow.push(-turbine.maintenance);
+              cashFlow.push(-turbine.maintenance);
             }
 
             const energyFlow = Array(turbine.timeToConstruct).fill(0);
             for (let i = 0; i < timespan; i++) {
-                energyFlow.push(turbine.nominalPower * (1 - outputDRate / 100) ** i);
+              energyFlow.push(turbine.nominalPower * (1 - outputDRate / 100) ** i * 365 * 24);
             }
 
             const presentEnergy = finance.NPV(discountRate, 0, ...energyFlow);

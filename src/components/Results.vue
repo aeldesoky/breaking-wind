@@ -162,17 +162,17 @@ export default class Results extends Vue {
     }
 
     // Best -> worst
-    const best: Array<null | Best> = Array(this.numberOfResults).map((_) => null);
+    const best: Array<null | Best> = Array(this.numberOfResults).fill(null);
 
     this.selectedAnalyses.results.forEach((result, resultIndex) => {
       const turbine = result.turbine;
       result.lcoes.forEach((row, rowIndex) => {
         row.forEach((lceo, colIndex) => {
           const insert = (insertIndex: number) => {
-            best.splice(insertIndex + 1, 0, {
+            best[insertIndex + 1] = {
               indices: [resultIndex, rowIndex, colIndex],
               lceo,
-            });
+            };
           };
 
           for (const [i, item] of best.slice(0).reverse().entries()) {

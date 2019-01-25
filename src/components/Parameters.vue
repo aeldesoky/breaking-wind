@@ -199,11 +199,11 @@ export default class Parameters extends Vue {
   }
 
   public showModal() {
-      this.isModalVisible = true;
+    this.isModalVisible = true;
   }
 
   public closeModal() {
-      this.isModalVisible = false;
+    this.isModalVisible = false;
   }
 
   public analyze() {
