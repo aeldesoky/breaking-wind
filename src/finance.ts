@@ -1,7 +1,7 @@
 
-import { data, Turbine } from '@/store';
-import {Finance } from 'financejs';
-import wind from './resources/wind';
+import { data, Turbine, Result } from '@/store';
+import { Finance } from 'financejs';
+import { copy } from '@/utils';
 
 // valid option
 class Option {
@@ -19,83 +19,75 @@ class Option {
     }
 }
 
-interface LcoeMap {
-    turbine: Turbine;
-    map: number[][];
-}
-
 export default class Finances {
-    public options: Array<Option> = [];
-    public discountRate: number; 
-    public outputDRate: number;
-    public timespan: number;
-    public lcoeMap: Array<LcoeMap> = [];
-    public cashFlow: Array<number>;
-
-    constructor(){
-        this.discountRate = data.general.discountRate;
-        this.outputDRate = data.general.outputDecreasePerYear;
-        this.timespan = data.general.lifeSpan;
-        this.cashFlow = new Array(data.general.lifeSpan);
-    }
-
     public evaluate() {
         let finance = new Finance();
 
-        data.turbines.forEach((turbine: Turbine) => {
-            let lcoeMap: LcoeMap = <LcoeMap> {turbine: turbine};
-            
-             if (!turbine.disabled) {
-                let initialCost = this.calculateOptionalCosts(turbine);
-                initialCost += turbine.unitCost;
-    
-                for (let i = 0; i < data.wind.length; i++) {
-                    for(let j = 0; j < data.wind[0].length; j++) {
-                        if (data.depth[i][j] > 60 || 
-                            wind[i][j] < turbine.nominalPowerAt ||
-                            wind[i][j] >= turbine.cutOutWindSpeed) {
-                            
-                            lcoeMap.map[i][j] = Infinity;
-                            continue;
-                        }
-                        else {
-                            initialCost += data.depth[i][j] * turbine.costPerMeterDepth
-                        }
+        let timespan = data.general.lifeSpan;
+        let outputDRate = data.general.outputDecreasePerYear;
+        let discountRate = data.general.discountRate;
+        
+        let results = data.turbines.map((turbine: Turbine) => {
+            let lcoeMap: Result = { turbine: copy(turbine), lcoes: [] };
+            if (turbine.disabled) {
+                return;
+            }
 
-                        this.cashFlow = new Array(this.timespan);
+            let initialCost = this.calculateOptionalCosts(turbine);
+            initialCost += turbine.unitCost;
 
-                        for (let i = 0; i < this.timespan - 1; i++) {
-                            this.cashFlow[0] -= turbine.maintenance
-                        }
+            const cashFlow = Array(turbine.timeToConstruct).fill(0);
+            for (let i = 0; i < timespan; i++) {
+                cashFlow.push(-turbine.maintenance);
+            }
 
-                        let presentValue = finance.NPV(this.discountRate, initialCost, ...this.cashFlow);
+            const energyFlow = Array(turbine.timeToConstruct).fill(0);
+            for (let i = 0; i < timespan; i++) {
+                energyFlow.push(turbine.nominalPower * (1 - outputDRate / 100) ^ i)
+            }
 
-                        if (data.general.budget < presentValue) {
-                            lcoeMap.map[i][j] = Infinity;
-                            continue;
-                        }
-                        else {
-                            let totalPower = 0;
-                            let leftOverPercentage = 1;
-                            for (let k = 0; k < this.timespan; k++) {
-                                totalPower += turbine.nominalPower * leftOverPercentage;
-                                leftOverPercentage *= (1 - this.outputDRate/100)
-                            }
+            let presentEnergy = finance.NPV(discountRate, 0, ...energyFlow);
 
-                            lcoeMap.map[i][j] = presentValue/totalPower
-                        }
+            for (let i = 0; i < data.wind.length; i++) {
+                lcoeMap.lcoes[i] = [];
+                for(let j = 0; j < data.wind[0].length; j++) {
+                    if (data.depth[i][j] > 60 || 
+                        data.wind[i][j] < turbine.nominalPowerAt ||
+                        data.wind[i][j] >= turbine.cutOutWindSpeed) {
+                        
+                        lcoeMap.lcoes[i][j] = Infinity;
+                        continue;
                     }
-                }   
+                    
+                    // Initial investment is supposed to be negative
+                    const pointInitialCost = -initialCost - data.depth[i][j] * turbine.costPerMeterDepth;
+                    let presentValue = finance.NPV(discountRate, pointInitialCost, ...cashFlow);
+                    if (data.general.budget < Math.abs(presentValue)) {
+                        lcoeMap.lcoes[i][j] = Infinity;
+                        continue;
+                    }
+
+                    lcoeMap.lcoes[i][j] = Math.abs(presentValue / presentEnergy)
+                }
             }
             
-            // lcoeMap:
+            return lcoeMap;
         });
+        
+        const filtered = results.filter(result => result) as Result[];
+        data.addResult({
+            date: new Date(),
+            options: copy(data.general),
+            results: filtered,
+        })
     }
 
     private calculateOptionalCosts(turbine: Turbine) {
+        turbine = copy(turbine);
+
         let yearlyHelicopterCost = 0;
         let MaintenanceVesselsCost = 0;
-        let optionalCost = new Array(this.timespan);
+        let optionalCost = new Array(data.general.lifeSpan);
         let finance = new Finance();
 
         if (data.optionalCosts.HeliCost != 0) {
@@ -121,7 +113,7 @@ export default class Finances {
                                data.optionalCosts.upgradeTeamCost);
         }
 
-        return finance.NPV(this.discountRate, -MaintenanceVesselsCost, ...optionalCost);
+        return finance.NPV(data.general.discountRate, -MaintenanceVesselsCost, ...optionalCost);
     }
 }
 

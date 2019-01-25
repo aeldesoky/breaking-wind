@@ -30,7 +30,7 @@ export interface Options {
 
 export interface Analyses {
   date: Date;
-  name: string;
+  name?: string;
   options: Options;
   results: Result[];
 }
@@ -55,16 +55,16 @@ class DataModule extends VuexModule {
     };
 
     public optionalCosts = {
-      HeliCost: 0,
-      HeliWeeksPerYear: 0,
-      MaintenanceVesselsCost: 0,
-      MaintenanceVesselsNum: 0,
-      DiagnosticTeamCost: 0,
-      OffshoreLogisticCost: 0,
-      upgradeTeamCost: 0,
+      HeliCost: 1000,
+      HeliWeeksPerYear: 2,
+      MaintenanceVesselsCost: 1000,
+      MaintenanceVesselsNum: 1,
+      DiagnosticTeamCost: 420,
+      OffshoreLogisticCost: 69,
+      upgradeTeamCost: 8,
     };
 
-    public results: any[] = [];
+    public analyses: Analyses[] = [];
 
     public turbines: Turbine[] = [
       {
@@ -90,8 +90,8 @@ class DataModule extends VuexModule {
     }
 
   @Mutation
-  public addResult(result: any) {
-    this.results.push(result);
+  public addResult(analyses: Analyses) {
+    this.analyses.push(analyses);
   }
 
   @Mutation
