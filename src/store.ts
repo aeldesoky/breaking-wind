@@ -2,6 +2,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators';
 
+export interface Turbine {
+    nominalPowerAt: number;
+    nominalPower: number;
+    unitCost: number;
+    maintenance: number;
+    timeToConstruct: number;
+}
+
 Vue.use(Vuex);
 interface StoreType {
     data: DataModule;
@@ -23,7 +31,7 @@ class DataModule extends VuexModule {
 
     public results: any[] = [];
 
-    public turbines = [
+    public turbines: Turbine[] = [
         {
             nominalPowerAt: 12.5,
             nominalPower: 8000,
