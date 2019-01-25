@@ -24,10 +24,10 @@ export interface Result {
 }
 
 export interface Options {
-  budget: 200000;
-  outputDecreasePerYear: 1;
-  discountRate: 10;
-  lifeSpan: 25;
+  budget: number;
+  outputDecreasePerYear: number;
+  discountRate: number;
+  lifeSpan: number;
 }
 
 export interface Analyses {
@@ -50,7 +50,7 @@ class DataModule extends VuexModule {
     public wind: number[][] = wind;
 
     public general: Options = {
-      budget: 200000,
+      budget: 50_000_000,
       outputDecreasePerYear: 1, // %
       discountRate: 10, // %
       lifeSpan: 25, // years

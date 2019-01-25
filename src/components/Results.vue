@@ -16,55 +16,18 @@ Used to provide results of the analysis.
       ></v-select>
     </div>
 
-    <div class="items">
-      <div
-          v-for="(item, i) in results"
-          :key="i"
-      >
-        <div>{{ item.turbine.name }}</div>
-        <div>{{ item.lceo }}</div>
-      </div>
-    </div>
     <div class="analysis-value-container">
       <v-card 
         class="results-card"
         v-for="(item, i) in results"
         :key="i"
       >
-        <span class="headline">Turbine Type: {{ item.turbine.type }}</span>
-        <span class="headline">Projected Cost ($ NPV): {{ item.cost }}</span>
-        <span class="headline">Energy Output (kWh NPV): {{ item.energy }}</span>
-        <span class="headline">LCEO Value: {{ item.lceo }}</span>
-        <span class="headline">Latitude: {{ item.lceo }}</span>
-      </v-card>
-    <div class="analysis-value-container">
-      <v-card class="results-card">
-        <v-container fluid>
-          <v-layout>
-            <v-flex xs12 align-end flexbox>
-              <span class="headline">Latitude:</span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-title>
-          <div>
-            <span class="value">45.345</span>
-          </div>
-        </v-card-title>
-      </v-card>
-      <v-card class="results-card">
-        <v-container fluid>
-          <v-layout>
-            <v-flex xs12 align-end flexbox>
-              <span class="headline">Longitude:</span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-        <v-card-title>
-          <div>
-            <span class="value">-66.4346</span>
-          </div>
-        </v-card-title>
+        <span class="card-item">Turbine Type: {{ item.turbine.name }}</span>
+        <span class="card-item">Projected Cost ($ NPV): {{ item.cost }}</span>
+        <span class="card-item">Energy Output (kWh NPV): {{ item.energy }}</span>
+        <span class="card-item">LCEO Value: {{ item.lceo }}</span>
+        <span class="card-item">Latitude: {{ item.latitude }}</span>
+        <span class="card-item">Longitude: {{ item.longitude }}</span>
       </v-card>
     </div>
   </v-card>
@@ -152,6 +115,8 @@ export default class Results extends Vue {
       return {
         lceo,
         turbine: result.turbine,
+        cost: result.cost[indices[1], indices[2]],
+        energy: result.energy,
         latitude: latlon.latitude[indices[1]],
         longitude: latlon.latitude[indices[2]],
       };
@@ -177,4 +142,7 @@ export default class Results extends Vue {
   color: green
   font-size: 40px
   font-weight: bold
+
+.card-item
+  display: block
 </style>

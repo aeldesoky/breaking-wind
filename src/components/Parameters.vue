@@ -20,12 +20,11 @@ analysis.
 
     <v-form v-model="valid">
       <v-slider
-        :value="general.budget/ 1000000"
-        @input="setOption('budget', $event / 1000000)"
+        :value="general.budget / 1000000"
+        @input="setOption('budget', $event * 1000000)"
         max="100"
         label="Budget (Million $)"
         thumb-label
-        :thumb-size="60"
       ></v-slider>
 
       <v-slider
@@ -159,14 +158,13 @@ import HelpModal from './HelpModal.vue';
 import Finances from '@/finance';
 
 @Component({
-    components: {
-        HelpModal,
-    },
+  components: {
+    HelpModal,
+  },
 })
 export default class Parameters extends Vue {
   public general = data.general;
   public valid = false;
-  public setOption = data.setOption;
   public turbine: Turbine | null = null;
   public isModalVisible = false;
   public finaces = new Finances();
@@ -196,6 +194,13 @@ export default class Parameters extends Vue {
       key,
       value,
     });
+  }
+
+  public setOption(key: string, value: any) {
+    data.setOption({
+      key,
+      value,
+    })
   }
 
   public showModal() {
