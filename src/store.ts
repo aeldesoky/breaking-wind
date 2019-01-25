@@ -9,6 +9,7 @@ export interface Turbine {
   unitCost: number;
   maintenance: number;
   timeToConstruct: number;
+  disabled: boolean;
 }
 
 Vue.use(Vuex);
@@ -30,6 +31,16 @@ class DataModule extends VuexModule {
       lifeSpan: 25, // years
     };
 
+    public optionalCosts = {
+      HeliCost: 0,
+      HeliWeeksPerYear: 0,
+      MaintenanceVesselsCost: 0,
+      MaintenanceVesselsNum: 0,
+      DiagnosticTeamCost: 0,
+      OffshoreLogisticCost: 0,
+      upgradeTeamCost: 0,
+    };
+
     public results: any[] = [];
 
     public turbines: Turbine[] = [
@@ -40,6 +51,7 @@ class DataModule extends VuexModule {
         unitCost: 38_000_000,
         maintenance: 1_000_000,
         timeToConstruct: 1,
+        disabled: false,
       },
     ];
 
@@ -61,6 +73,7 @@ class DataModule extends VuexModule {
   public setOption(payload: { key: string, value: any }) {
     if (!(payload.key in this.general)) {
       throw Error(`Unknown key: #${payload.key}`);
+
     }
 
     // @ts-ignore

@@ -1,35 +1,42 @@
 <template>
   <v-app>
-;    <v-toolbar app>;
+    <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>TEAM 2 </span>
+        <span class="font-weight-light">Breaking Wind</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
         flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        href="https://github.com/AECcompdirector/teamUNB2"
         target="_blank"
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">GitHub</span>
       </v-btn>
     </v-toolbar>
 
     <v-content>
-      <parameters></parameters>
+      <Map class="map"/>
+      <div class="spacer"></div>
+      <div class="row">
+        <parameters class="parameters"></parameters>
+        <results class="results"></results>
+      </div>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
 import Parameters from '@/components/Parameters.vue';
+import Results from '@/components/Results.vue';
+import Map from "./components/Map";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
     Parameters,
+    Map,
+    Results,
   },
   data () {
     return {
@@ -38,3 +45,14 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.spacer
+  margin: 10px
+
+.row
+  display: flex
+
+.parameters, .results
+  flex: 1
+</style>

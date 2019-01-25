@@ -11,8 +11,10 @@
     "storybook:build": "vue-cli-service storybook:build -c config/storybook"
   },
   "dependencies": {
+    "financejs": "^4.1.0",
     "vue": "^2.5.21",
     "vue-class-component": "^6.0.0",
+    "vue-google-heatmap": "^1.0.1",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vuetify": "^1.3.0",
