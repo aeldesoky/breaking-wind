@@ -1,9 +1,9 @@
 <template>
 	<google-heatmap :points="points"
 					:height="500"
-					:initial-zoom=10
-					:lat="43.472075"
-					:lng="-66.147352">
+					:initial-zoom=11
+					:lat="43.444364"
+					:lng="-66.016417">
 	</google-heatmap>
 </template>
 
@@ -24,11 +24,11 @@
             let points = [];
             let lat = latMin;
             let lng = lngMin;
-            depth.forEach((longitudeValues) => {
+            wind.forEach((longitudeValues) => {
                 lat = latMin;
 
                 longitudeValues.forEach((value) => {
-                    points.push({lat: lat, lng: lng, weight: value});
+                    points.push({lat: lat, lng: lng, weight: Math.pow(value, 2)});
 					lat += delta;
 				});
 

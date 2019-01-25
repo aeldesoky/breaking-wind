@@ -11,7 +11,8 @@
         href="https://github.com/AECcompdirector/teamUNB2"
         target="_blank"
       >
-        <span class="mr-2">GitHub</span>
+        <span class="mr-2"> GitHub</span>
+        <v-icon>launch</v-icon>
       </v-btn>
     </v-toolbar>
 
@@ -22,6 +23,7 @@
         <parameters class="parameters"></parameters>
         <results class="results"></results>
       </div>
+      <div class="spacer"></div>
     </v-content>
   </v-app>
 </template>
@@ -48,7 +50,7 @@ export default {
 
 <style lang="sass" scoped>
 .spacer
-  margin: 10px
+  margin: 15px
 
 .row
   display: flex
