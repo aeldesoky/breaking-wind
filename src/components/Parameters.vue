@@ -78,7 +78,7 @@ analysis.
         label="Helicopter Trips (Times / Year)"
         thumb-label
       ></v-slider>
-      
+
       <v-slider
         :value="optional.MaintenanceVesselsCost"
         @input="setOptionalCost('MaintenanceVesselsCost', $event)"
@@ -257,8 +257,6 @@ export default class Parameters extends Vue {
     if (!this.turbine) {
       return;
     }
-
-    // console.log(key, value);
 
     data.setTurbineOptions({
       turbine: this.turbine,

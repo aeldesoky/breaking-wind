@@ -15,29 +15,47 @@ Utilizes the Google Maps API.
 
 <script>
     import GoogleHeatmap from './GoogleHeatmap.vue';
-    import wind from '@/resources/wind';
-    import depth from '@/resources/depth';
-    import latlon from '@/resources/latlon';
+    import Coordinates from '@/resources/latlon';
+    import { data } from '@/store';
 
     export default {
         components: {
             GoogleHeatmap
         },
-        data() {
-            let points = [];
-            for(let latIndex = 0; latIndex < latlon.latitude.length; latIndex++) {
-                let latitude = latlon.latitude[latIndex];
+        computed: {
+            points() {
+                let analysis = data.selectedAnalyses;
+                let turbine = data.turbine;
 
-                for(let lngIndex = 0; lngIndex < latlon.longitude.length; lngIndex++) {
-                    let longitude = latlon.longitude[lngIndex];
-                    let value = wind[latIndex][lngIndex];
+                if(!analysis || !analysis.results) {
+                    return [];
+				}
 
-                    points.push({lat: latitude, lng: longitude, weight: Math.pow(value, 2)});
+                if(analysis.results.length === 0) {
+                    return [];
                 }
-			}
 
-            return {
-                points: points
+				let turbineIndex = data.turbines.indexOf(data.turbine);
+                let values = analysis.results[turbineIndex].lcoes;
+                if(values.length === 0) {
+                    return [];
+				}
+
+                let points = [];
+                for(let latIndex = 0; latIndex < Coordinates.latitude.length; latIndex++) {
+                    const latitude = Coordinates.latitude[latIndex];
+
+                    for(let lngIndex = 0; lngIndex < Coordinates.longitude.length; lngIndex++) {
+                        const longitude = Coordinates.longitude[lngIndex];
+                        const value = values[latIndex][lngIndex];
+
+                        if(1 / value) {
+                            points.push({lat: latitude, lng: longitude, weight: 1 / value});
+                        }
+                    }
+                }
+
+                return points;
 			}
         }
     }

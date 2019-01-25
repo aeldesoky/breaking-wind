@@ -160,6 +160,11 @@ class DataModule extends VuexModule {
   }
 
   @Mutation
+  public selectAnalyses(analyses: Analyses) {
+    this.selectedAnalyses = analyses;
+  }
+
+  @Mutation
   public selectTurbine(turbine: Turbine) {
     this.turbine = turbine;
   }
