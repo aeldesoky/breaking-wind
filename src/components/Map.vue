@@ -36,26 +36,27 @@ export default {
         return [];
       }
 
-      let turbineIndex = data.turbines.indexOf(data.turbine);
-        let values = analysis.results[turbineIndex].lcoes;
-        if(values.length === 0) {
-          return [];
-        }
+      let actualTurbine = data.turbines.find(t => t.name === data.turbine.name);
+      const turbineIndex = data.turbines.indexOf(actualTurbine);
+      let values = analysis.results[turbineIndex].lcoes;
+      if(values.length === 0) {
+        return [];
+      }
 
-        let points = [];
-        for(let latIndex = 0; latIndex < Coordinates.latitude.length; latIndex++) {
-          const latitude = Coordinates.latitude[latIndex];
+      let points = [];
+      for(let latIndex = 0; latIndex < Coordinates.latitude.length; latIndex++) {
+        const latitude = Coordinates.latitude[latIndex];
 
-          for(let lngIndex = 0; lngIndex < Coordinates.longitude.length; lngIndex++) {
-            const longitude = Coordinates.longitude[lngIndex];
-            // If the value is null, make sure it is Infinity
-            const value = values[latIndex][lngIndex] || Infinity;
+        for(let lngIndex = 0; lngIndex < Coordinates.longitude.length; lngIndex++) {
+          const longitude = Coordinates.longitude[lngIndex];
+          // If the value is null, make sure it is Infinity
+          const value = values[latIndex][lngIndex] || Infinity;
 
-            if(1 / value) {
-              points.push({lat: latitude, lng: longitude, weight: 1 / value});
-            }
+          if(1 / value) {
+            points.push({lat: latitude, lng: longitude, weight: 1 / value});
           }
         }
+      }
 
         return points;
   }

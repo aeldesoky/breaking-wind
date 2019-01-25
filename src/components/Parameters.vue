@@ -98,8 +98,7 @@ analysis.
           :disabled="turbine.disabled"
           :value="turbine.unitCost / 1000000"
           @input="changeTurbine('unitCost', $event * 1000000)"
-          max="50"
-          ticks
+          max="75"
           label="Unit Cost (Million)"
           thumb-label
         ></v-slider>
@@ -307,6 +306,9 @@ export default class Parameters extends Vue {
     evaluate();
     data.setFinishedAnalyses(true);
     data.save();
+
+    // Select most recent analyses
+    data.selectAnalyses(data.analyses[data.analyses.length - 1])
   }
 }
 </script>

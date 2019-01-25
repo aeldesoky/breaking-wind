@@ -32,7 +32,7 @@
       top
       right
     >
-      Analyses finished. See Analyses dropdown.
+      Analysis finished.
       <v-btn
         color="primary"
         flat
