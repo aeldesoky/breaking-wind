@@ -7,13 +7,13 @@ import { VuexModule, Mutation, Module, getModule } from 'vuex-module-decorators'
 export interface Turbine {
   name: string;
   nominalPowerAt: number;
+  cutOutWindSpeed: number;
   nominalPower: number;
+  costPerMeterDepth: number;
   unitCost: number;
   maintenance: number;
   timeToConstruct: number;
   disabled: boolean;
-  cutOutWindSpeed: number;
-  costPerMeterDepth: number;
 }
 
 export interface Result {
@@ -30,7 +30,7 @@ export interface Options {
 
 export interface Analyses {
   date: Date;
-  name: string;
+  name?: string;
   options: Options;
   results: Result[];
 }
@@ -64,26 +64,59 @@ class DataModule extends VuexModule {
       upgradeTeamCost: 0,
     };
 
-    public results: any[] = [];
+    public results: Analyses[] = [];
 
     public turbines: Turbine[] = [
       {
         name: 'Type 1',
         nominalPowerAt: 12,
+        cutOutWindSpeed: 25,
         nominalPower: 8000,
+        costPerMeterDepth: 1505,
         unitCost: 38_000_000,
         maintenance: 1_000_000,
         timeToConstruct: 1,
         disabled: false,
+      },
+      {
+        name: 'Type 2',
+        nominalPowerAt: 13,
         cutOutWindSpeed: 25,
-        costPerMeterDepth: 1505,
+        nominalPower: 7000,
+        costPerMeterDepth: 1360,
+        unitCost: 34_000_000,
+        maintenance: 800_000,
+        timeToConstruct: 1,
+        disabled: false,
+      },
+      {
+        name: 'Type 3',
+        nominalPowerAt: 11,
+        cutOutWindSpeed: 25,
+        nominalPower: 8000,
+        costPerMeterDepth: 1650,
+        unitCost: 35_000_000,
+        maintenance: 1_100_000,
+        timeToConstruct: 2,
+        disabled: false,
+      },
+      {
+        name: 'Type 4',
+        nominalPowerAt: 12,
+        cutOutWindSpeed: 30,
+        nominalPower: 6000,
+        costPerMeterDepth: 1273,
+        unitCost: 29_000_000,
+        maintenance: 790_000,
+        timeToConstruct: 1,
+        disabled: false,
       },
     ];
 
     get turbineLookup() {
-      const lookup: { [k: string]: Turbine } = {};
-      this.turbines.forEach((turbine) => {
-        lookup[turbine.name] = turbine;
+      const lookup: { [k: string]: number } = {};
+      this.turbines.forEach((turbine, i) => {
+        lookup[turbine.name] = i;
       });
 
       return lookup;
@@ -106,7 +139,7 @@ class DataModule extends VuexModule {
   }
 
   @Mutation
-  public setTurbineOptions<T extends Turbine>(payload: { turbine: T, key: string, value: any }) {
+  public setTurbineOptions(payload: { turbine: Turbine, key: string, value: any }) {
     if (!(payload.key in payload.turbine)) {
       throw Error(`Unknown key: #${payload.key}`);
     }

@@ -14,7 +14,7 @@
     <v-form v-model="valid">
       <v-slider
         :value="general.budget"
-        @update="setOption('budget', $event)"
+        @input="setOption('budget', $event)"
         max="50000000"
         label="Budget ($)"
         thumb-label
@@ -23,7 +23,7 @@
 
       <v-slider
         :value="general.discountRate"
-        @update="setOption('discountRate', $event)"
+        @input="setOption('discountRate', $event)"
         max="20"
         ticks
         label="Dicount Rate (%)"
@@ -32,7 +32,7 @@
 
       <v-slider
         :value="general.outputDecreasePerYear"
-        @update="setOption('outputDecreasePerYear', $event)"
+        @input="setOption('outputDecreasePerYear', $event)"
         max="20"
         ticks
         label="Output Decrease (%)"
@@ -41,7 +41,7 @@
 
       <v-slider
         :value="general.lifeSpan"
-        @update="setOption('lifeSpan', $event)"
+        @input="setOption('lifeSpan', $event)"
         max="40"
         min="10"
         ticks
@@ -59,9 +59,9 @@
       <v-spacer></v-spacer>
       <v-select
         class="turbine-select"
-        :items="turbineNames"
+        :items="turbineOptions"
         label="Turbine"
-        v-model="selectedTurbine"
+        v-model="turbine"
       ></v-select>
       <!-- <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div> -->
     </div>
@@ -70,31 +70,35 @@
       v-model="valid"
       v-if="turbine"
     >
-      <v-text-field
+      <!-- <v-text-field
+        :disabled="turbine.disabled"
         :value="turbine.name"
         label="Name"
-        @update="changeTurbine('name', $event)"
-      ></v-text-field>
+        @input="changeTurbine('name', $event)"
+      ></v-text-field> -->
 
       <v-slider
+        :disabled="turbine.disabled"
         :value="turbine.nominalPowerAt"
-        @update="changeTurbine('nominalPowerAt', $event)"
+        @input="changeTurbine('nominalPowerAt', $event)"
         max="30"
         label="Nominal Power At (m/s)"
         thumb-label
       ></v-slider>
 
       <v-slider
-        :value="turbine.nominalPower / 10"
-        @update="changeTurbine('nominalPower', $event * 10)"
+        :disabled="turbine.disabled"
+        :value="turbine.nominalPower / 1000"
+        @input="changeTurbine('nominalPower', $event * 1000)"
         max="10"
         label="Nominal Power (MW)"
         thumb-label
       ></v-slider>
 
       <v-slider
+        :disabled="turbine.disabled"
         :value="turbine.unitCost / 1000000"
-        @update="changeTurbine('unitCost', $event * 1000000)"
+        @input="changeTurbine('unitCost', $event * 1000000)"
         max="50"
         ticks
         label="Unit Cost (Million)"
@@ -102,8 +106,9 @@
       ></v-slider>
 
       <v-slider
+        :disabled="turbine.disabled"
         :value="turbine.maintenance / 1000000"
-        @update="changeTurbine('maintenance', $event * 1000000)"
+        @input="changeTurbine('maintenance', $event * 1000000)"
         max="2"
         ticks
         step="0.1"
@@ -112,13 +117,20 @@
       ></v-slider>
 
       <v-slider
+        :disabled="turbine.disabled"
         :value="turbine.timeToConstruct"
-        @update="changeTurbine('timeToConstruct', $event)"
+        @input="changeTurbine('timeToConstruct', $event)"
         max="5"
         ticks
         label="Time To Construct (Years)"
         thumb-label
       ></v-slider>
+
+      <v-checkbox
+        label="Disabled"
+        :value="turbine.disabled"
+        @change="changeTurbine('disabled', $event)"
+      ></v-checkbox>
     </v-form>
 
     <v-card-actions>
@@ -134,8 +146,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
-import { data } from '@/store';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { data, Turbine } from '@/store';
 import HelpModal from './HelpModal.vue';
 import Finances from '@/finance';
 
@@ -148,25 +160,30 @@ export default class Parameters extends Vue {
   public general = data.general;
   public valid = false;
   public setOption = data.setOption;
-  public selectedTurbine: string = '';
+  public turbine: Turbine | null = null;
   public isModalVisible = false;
   public finaces = new Finances();
 
-  get turbine() {
-    return data.turbineLookup[this.selectedTurbine];
-  }
-
-  get turbineNames() {
-    return data.turbines.map((turbine) => turbine.name);
+  get turbineOptions() {
+    return data.turbines.map((turbine) => ({
+      text: turbine.name,
+      value: turbine,
+    }));
   }
 
   public mounted() {
-    if (!this.selectedTurbine) {
-      this.selectedTurbine = this.turbineNames[0];
+    if (!this.turbine) {
+      this.turbine = data.turbines[0];
     }
   }
 
   public changeTurbine(key: string, value: number) {
+    if (!this.turbine) {
+      return;
+    }
+
+    console.log(key, value)
+    
     data.setTurbineOptions({
       turbine: this.turbine,
       key,
