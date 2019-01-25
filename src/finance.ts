@@ -59,7 +59,7 @@ export default class Finances {
                     if (data.depth[i][j] > 60 ||
                         data.wind[i][j] < turbine.nominalPowerAt ||
                         data.wind[i][j] >= turbine.cutOutWindSpeed) {
-
+                        lcoeMap.cost[i][j] = 0;
                         lcoeMap.lcoes[i][j] = Infinity;
                         continue;
                     }
@@ -68,6 +68,7 @@ export default class Finances {
                     const pointInitialCost = -initialCost - data.depth[i][j] * turbine.costPerMeterDepth;
                     const presentValue = finance.NPV(discountRate, pointInitialCost, ...cashFlow);
                     if (data.general.budget < Math.abs(presentValue)) {
+                        lcoeMap.cost[i][j] = 0;
                         lcoeMap.lcoes[i][j] = Infinity;
                         continue;
                     }
