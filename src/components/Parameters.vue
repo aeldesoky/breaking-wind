@@ -26,7 +26,7 @@
         @update="setOption('discountRate', $event)"
         max="20"
         ticks
-        label="Dicount Rate (%)"
+        label="Discount Rate (%)"
         thumb-label
       ></v-slider>
 

@@ -42,7 +42,8 @@
                 });
                 this.$heatmap = new google.maps.visualization.HeatmapLayer({
                     data: this.heatmapPoints,
-                    map: this.$mapObject
+                    map: this.$mapObject,
+                    radius: 20
                 });
                 this.$heatmap.setMap(this.$mapObject);
             });
