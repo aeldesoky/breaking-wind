@@ -40,7 +40,7 @@ Also defines customizations that are not possible through the default component.
             return loaded.then(() => {
                 const mapElement = this.$refs.map;
                 this.$mapObject = new google.maps.Map(mapElement, {
-                    zoom: this.initialZoom,
+                    zoom: 10,
                     center: { lat: this.lat, lng: this.lng },
                     mapTypeId: 'hybrid',
                     streetViewControl: false,
