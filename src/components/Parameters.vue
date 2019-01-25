@@ -20,10 +20,10 @@ analysis.
 
     <v-form v-model="valid">
       <v-slider
-        :value="general.budget"
-        @input="setOption('budget', $event)"
-        max="50000000"
-        label="Budget ($)"
+        :value="general.budget/ 1000000"
+        @input="setOption('budget', $event / 1000000)"
+        max="100"
+        label="Budget (Million $)"
         thumb-label
         :thumb-size="60"
       ></v-slider>
@@ -189,8 +189,8 @@ export default class Parameters extends Vue {
       return;
     }
 
-    console.log(key, value)
-    
+    console.log(key, value);
+
     data.setTurbineOptions({
       turbine: this.turbine,
       key,
