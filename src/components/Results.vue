@@ -1,26 +1,117 @@
 <template>
   <v-card class="results">
-    <div style="display: flex">
-      <h3 class="headline mb-0">Results</h3>
-      <v-spacer></v-spacer>
-      <v-select
-        :items="options"
-        label="Analyses"
-        v-model="selectedAnalyses"
-      ></v-select>
+    <div>
+      <h3 class="headline mb-0">Analysis Results</h3>
     </div>
+    <div class="analysis-value-container">
+      <v-card class="results-card">
+        <v-container fluid>
+          <v-layout>
+            <v-flex xs12 align-end flexbox>
+              <span class="headline">Turbine Type:</span>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card-title>
+          <div>
+            <span class="value">IEC class 1B</span>
+          </div>
+        </v-card-title>
+      </v-card>
+      <v-card class="results-card">
+        <v-container fluid>
+          <v-layout>
+            <v-flex xs12 align-end flexbox>
+              <span class="headline">Projected Cost:</span>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card-title>
+          <div>
+            <span class="value">$68.4M</span>
+          </div>
+        </v-card-title>
+      </v-card>
+      <v-card class="results-card">
+        <v-container fluid>
+          <v-layout>
+            <v-flex xs12 align-end flexbox>
+              <span class="headline">Energy Output:</span>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card-title>
+          <div>
+            <span class="value">3MW</span>
+          </div>
+        </v-card-title>
+      </v-card>
+    </div>
+    <div class="analysis-value-container">
+      <v-card class="results-card">
+        <v-container fluid>
+          <v-layout>
+            <v-flex xs12 align-end flexbox>
+              <span class="headline">LCOE Value:</span>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card-title>
+          <div>
+            <span class="value">54.62</span>
+          </div>
+        </v-card-title>
+      </v-card>
+      <v-card class="results-card">
+        <v-container fluid>
+          <v-layout>
+            <v-flex xs12 align-end flexbox>
+              <span class="headline">Latitude:</span>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card-title>
+          <div>
+            <span class="value">45.345</span>
+          </div>
+        </v-card-title>
+      </v-card>
+      <v-card class="results-card">
+        <v-container fluid>
+          <v-layout>
+            <v-flex xs12 align-end flexbox>
+              <span class="headline">Longitude:</span>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-card-title>
+          <div>
+            <span class="value">-66.4346</span>
+          </div>
+        </v-card-title>
+      </v-card>
+    </div>
+	  <div style="display: flex">
+		  <h3 class="headline mb-0">Results</h3>
+		  <v-spacer></v-spacer>
+		  <v-select
+			  :items="options"
+			  label="Analyses"
+			  v-model="selectedAnalyses"
+		  ></v-select>
+	  </div>
 
-    <div
-      class="items"
-    >
-      <div 
-        v-for="(item, i) in results"
-        :key="i"
-      >
-        <div>{{ item.turbine.name }}</div>
-        <div>{{ item.lceo }}</div>
-      </div>
-    </div>
+	  <div
+		  class="items"
+	  >
+		  <div
+			  v-for="(item, i) in results"
+			  :key="i"
+		  >
+			  <div>{{ item.turbine.name }}</div>
+			  <div>{{ item.lceo }}</div>
+		  </div>
+	  </div>
   </v-card>
 </template>
 
@@ -112,6 +203,19 @@ export default class Results extends Vue {
 
 <style lang="sass" scoped>
 .results
-  margin: 0 20px
+  margin: 0 15px 15px 5px
   padding: 15px
+
+.results-card
+  margin: 15px
+  width: 100%
+
+.analysis-value-container
+  display: inline-flex
+  width: 100%
+
+.value
+  color: green
+  font-size: 40px
+  font-weight: bold
 </style>

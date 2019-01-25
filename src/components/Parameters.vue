@@ -207,7 +207,7 @@ export default class Parameters extends Vue {
 
 <style lang="sass" scoped>
 .parameters
-  margin: 0 20px
+  margin: 0 5px 15px 15px
   padding: 15px
 
 .turbine-title
