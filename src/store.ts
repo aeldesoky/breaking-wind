@@ -115,6 +115,7 @@ class DataModule extends VuexModule {
   ];
 
   public selectedAnalyses: null | Analyses = null;
+  public turbine: Turbine | null = null;
 
   get turbineLookup() {
     const lookup: { [k: string]: number } = {};
@@ -145,6 +146,11 @@ class DataModule extends VuexModule {
   public setTurbineOptions(payload: { turbine: Turbine, key: string, value: any }) {
     // @ts-ignore
     payload.turbine[payload.key] = payload.value;
+  }
+
+  @Mutation
+  public selectTurbine(turbine: Turbine) {
+    this.turbine = turbine;
   }
 }
 

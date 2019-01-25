@@ -67,7 +67,8 @@ analysis.
         class="turbine-select"
         :items="turbineOptions"
         label="Turbine"
-        v-model="turbine"
+        :value="data.turbine"
+        @input="data.selectTurbine"
       ></v-select>
       <!-- <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div> -->
     </div>
@@ -164,10 +165,14 @@ import Finances from '@/finance';
 })
 export default class Parameters extends Vue {
   public general = data.general;
+  public data = data;
   public valid = false;
-  public turbine: Turbine | null = null;
   public isModalVisible = false;
   public finaces = new Finances();
+
+  get turbine() {
+    return data.turbine;
+  }
 
   get turbineOptions() {
     return data.turbines.map((turbine) => ({
@@ -178,7 +183,7 @@ export default class Parameters extends Vue {
 
   public mounted() {
     if (!this.turbine) {
-      this.turbine = data.turbines[0];
+      data.selectTurbine(data.turbines[0]);
     }
   }
 
