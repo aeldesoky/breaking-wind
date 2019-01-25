@@ -8,6 +8,7 @@ export interface Turbine {
     unitCost: number;
     maintenance: number;
     timeToConstruct: number;
+    disabled: boolean;
 }
 
 Vue.use(Vuex);
@@ -33,6 +34,7 @@ class DataModule extends VuexModule {
 
     public turbines: Turbine[] = [
         {
+            disabled: false,
             nominalPowerAt: 12.5,
             nominalPower: 8000,
             unitCost: 38_000_000,
