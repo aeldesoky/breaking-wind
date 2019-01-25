@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "financejs": "^4.1.0",
     "vue": "^2.5.21",
     "vue-class-component": "^6.0.0",
     "vue-google-heatmap": "^1.0.1",

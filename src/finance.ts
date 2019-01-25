@@ -1,6 +1,6 @@
 
 import { data, Turbine } from '@/store';
-
+import {Finance } from 'financejs';
 
 // valid option
 class Option {
@@ -23,7 +23,7 @@ interface LcoeMap {
     map: number[][];
 }
 
-export default class Finance {
+export default class Finances {
     public options: Array<Option> = [];
     public marr: number;
     public discountRate: number; 
