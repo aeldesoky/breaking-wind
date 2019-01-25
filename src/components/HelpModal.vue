@@ -87,7 +87,7 @@ export default class HelpModal extends Vue {
 
 	.modal-header {
 		border-bottom: 1px solid #eeeeee;
-		color: #4AAE9B;
+		color: #1976d2;
 		justify-content: space-between;
 	}
 
