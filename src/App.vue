@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>TEAM 2 </span>
