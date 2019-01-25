@@ -41,6 +41,16 @@ class DataModule extends VuexModule {
         },
     ];
 
+    public optionalCosts = {
+        HeliCost: 0,
+        HeliWeeksPerYear: 0,
+        MaintenanceVesselsCost: 0,
+        MaintenanceVesselsNum: 0,
+        DiagnosticTeamCost: 0,
+        OffshoreLogisticCost: 0,
+        upgradeTeamCost: 0,
+    };
+
     @Mutation
     public addResult(result: any) {
         this.results.push(result);

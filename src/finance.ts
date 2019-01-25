@@ -21,16 +21,36 @@ export default class Finance {
     public marr: number;
     public discountRate: number; 
     public outputDRate: number;
+    public budget: number;
 
 
-    constructor(marr: number, discountRate: number, outputDRate: number){
+    constructor(marr: number, discountRate: number, outputDRate: number, budget: number){
         this.marr = marr;
         this.discountRate = discountRate;
         this.outputDRate = outputDRate;
+        this.budget = budget;
     }
 
     public evaluate() {
 
+    }
+
+    public calculateOptionalCosts() {
+        if (data.optionalCosts.HeliCost != 0) {
+
+        }
+
+        if (data.optionalCosts.MaintenanceVesselsCost != 0) {
+
+        }
+
+        if (data.optionalCosts.OffshoreLogisticCost != 0) {
+
+        }
+
+        if (data.optionalCosts.DiagnosticTeamCost != 0) {
+            
+        }
     }
 }
 
