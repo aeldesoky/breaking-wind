@@ -60,7 +60,11 @@ import latlon from '@/resources/latlon';
 @Component
 export default class Results extends Vue {
   public data = data;
+  
+  // The amount of results to display.
   public numberOfResults = 5;
+
+  // Options to display date properly
   public dateOptions = {
     month: 'long',
     day: 'numeric',
@@ -72,6 +76,7 @@ export default class Results extends Vue {
     return data.selectedAnalyses;
   }
 
+  // Options for dropdown
   get options(): Array<{ text: string, value: Analyses }> {
     return data.analyses.map((result) => {
       if (result.name) {
@@ -88,10 +93,9 @@ export default class Results extends Vue {
     });
   }
 
-  get selected() {
-    return '';
-  }
-
+  /**
+   * This returns the n best results from ALL points and ALL turbines.
+   */
   get results() {
     if (!this.selectedAnalyses) {
       return [];
@@ -102,7 +106,7 @@ export default class Results extends Vue {
       lceo: number;
     }
 
-    // Best -> worst
+    // Best (lowest LCEO value) -> worst
     const best: Best[] = [];
 
     this.selectedAnalyses.results.forEach((result, resultIndex) => {

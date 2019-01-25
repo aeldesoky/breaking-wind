@@ -64,6 +64,7 @@ export default class App extends Vue {
   public data = data;
 
   public mounted() {
+    // Load from localStorage when the app starts!
     data.load();
   }
 }
