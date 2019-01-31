@@ -1,5 +1,4 @@
 # Breaking Wind
-First place AEC 2019
 <img src="screenshot.png"/>
 
 ## Project setup
